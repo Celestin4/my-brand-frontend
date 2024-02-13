@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!-- Website - www.codingnepalweb.com -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css" />
+    <!-- Boxicons CDN Link -->
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo-details">
+        <div class="logo_name">Celestin</div>
+        <i class="bx bx-menu" id="btn"></i>
+      </div>
+      <ul class="nav-list">
+        <li>
+          <a href="#">
+            <i class="bx bx-grid-alt"></i>
+            <span class="links_name">Dashboard</span>
+          </a>
+          <span class="tooltip">Dashboard</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-user"></i>
+            <span class="links_name">User</span>
+          </a>
+          <span class="tooltip">User</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-chat"></i>
+            <span class="links_name">Portfolio</span>
+          </a>
+          <span class="tooltip">Portfolio</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-pie-chart-alt-2"></i>
+            <span class="links_name">Blogs</span>
+          </a>
+          <span class="tooltip">Blogs</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-folder"></i>
+            <span class="links_name">Messages</span>
+          </a>
+          <span class="tooltip">Messages</span>
+        </li>
+      </ul>
+    </div>
+    <section class="home-section">
+      <div class="user-section-wrapper">
+        <div class="user-list-heading">
+          <span>All (56)</span>
+          <button>Create New user <span>+</span></button>
+        </div>
+        <div class="user-table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>User Email</th>
+                <th>Subject</th>
+                <th>Content</th>
+                <th>Time of Delivery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Example messages with unique classes -->
+              <tr class="message1">
+                <td>user1@example.com</td>
+                <td>Question about portfolio</td>
+                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce euismod.</td>
+                <td>2024-02-09 10:00 AM</td>
+              </tr>
+              <tr class="message2">
+                <td>user2@example.com</td>
+                <td>Feedback on your work</td>
+                <td>Nulla nec est eu urna ultrices ullamcorper in in tortor.</td>
+                <td>2024-02-09 11:30 AM</td>
+              </tr>
+              <!-- Add more rows as needed -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <script src="dashboard.js"></script>
+  </body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!-- Website - www.codingnepalweb.com -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css" />
+    <!-- Boxicons CDN Link -->
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+
+   
+    <div class="sidebar">
+      <div class="logo-details">
+        <div class="logo_name">Celestin</div>
+        <i class="bx bx-menu" id="btn"></i>
+      </div>
+      <ul class="nav-list">
+        <li>
+          <a href="#">
+            <i class="bx bx-grid-alt"></i>
+            <span class="links_name">Dashboard</span>
+          </a>
+          <span class="tooltip">Dashboard</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-user"></i>
+            <span class="links_name">User</span>
+          </a>
+          <span class="tooltip">User</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-chat"></i>
+            <span class="links_name">Portfolio</span>
+          </a>
+          <span class="tooltip">Portfolio</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-pie-chart-alt-2"></i>
+            <span class="links_name">Blogs</span>
+          </a>
+          <span class="tooltip">Blogs</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-folder"></i>
+            <span class="links_name">Messages</span>
+          </a>
+          <span class="tooltip">Messages</span>
+        </li>
+      </ul>
+    </div>
+
+    
+    <section class="home-section">
+      <div class="user-section-wrapper">
+        <div class="dashbord-section-heading">
+          <button>Add New Portfolio<span>+</span></button>
+        </div>
+        <div class="portfolio-wrapper">
+          <div class="portfolio-card">
+            <img src="https://source.unsplash.com/random/300x200" alt="Project 1">
+            <h3>Project 1 Title</h3>
+            <a href="https://github.com/yourusername/project1" class="portfolio-github-link">GitHub Link</a>
+            <div class="portfolio-action-buttons">
+              <button onclick="editProject(1)">Edit</button>
+              <button onclick="deleteProject(1)">Delete</button>
+            </div>
+          </div>
+          <div class="portfolio-card">
+            <img src="https://source.unsplash.com/random/300x200" alt="Project 1">
+            <h3>Project 1 Title</h3>
+            <a href="https://github.com/yourusername/project1" class="portfolio-github-link">GitHub Link</a>
+            <div class="portfolio-action-buttons">
+              <button onclick="editProject(1)">Edit</button>
+              <button onclick="deleteProject(1)">Delete</button>
+            </div>
+          </div>
+          <div class="portfolio-card">
+            <img src="https://source.unsplash.com/random/300x200" alt="Project 1">
+            <h3>Project 1 Title</h3>
+            <a href="https://github.com/yourusername/project1" class="portfolio-github-link">GitHub Link</a>
+            <div class="portfolio-action-buttons">
+              <button onclick="editProject(1)">Edit</button>
+              <button onclick="deleteProject(1)">Delete</button>
+            </div>
+          </div>
+          <div class="portfolio-card">
+            <img src="https://source.unsplash.com/random/300x200" alt="Project 1">
+            <h3>Project 1 Title</h3>
+            <a href="https://github.com/yourusername/project1" class="portfolio-github-link">GitHub Link</a>
+            <div class="portfolio-action-buttons">
+              <button onclick="editProject(1)">Edit</button>
+              <button onclick="deleteProject(1)">Delete</button>
+            </div>
+          </div>
+          <div class="portfolio-card">
+            <img src="https://source.unsplash.com/random/300x200" alt="Project 1">
+            <h3>Project 1 Title</h3>
+            <a href="https://github.com/yourusername/project1" class="portfolio-github-link">GitHub Link</a>
+            <div class="portfolio-action-buttons">
+              <button onclick="editProject(1)">Edit</button>
+              <button onclick="deleteProject(1)">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="dashboard.js"></script>
+  </body>
+</html>
