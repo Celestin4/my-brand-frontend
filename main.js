@@ -1,3 +1,5 @@
+const mobileToggler = document.getElementById('mobile-toggle');
+const navbarLinks = document.getElementById('navbarLinks');
 // let circularProgress = document.querySelector(".circular-progress"),
 //     progressValue = document.querySelector(".progress-value");
 
@@ -53,3 +55,18 @@ var swiper = new Swiper('.swiper-container', {
     
   }
 });
+
+
+mobileToggler.addEventListener('click', ()=> {
+  navbarLinks.classList.toggle('mobile')
+})
+
+
+const navlinks = document.querySelectorAll('.navlink');
+
+    navlinks.forEach(function(navlink) {
+      navlink.addEventListener('click', function() {
+        navbarLinks.classList.remove('mobile');
+      });
+    });
+

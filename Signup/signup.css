@@ -98,7 +98,7 @@ align-items: center;
     font-size: 2rem;
     text-align: left;
 }
-.login-content {
+.signup-content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -147,6 +147,14 @@ input[type="checkbox"] {
     width: 100%;
 }
 
+.toggle-password {
+    display: flex;
+    justify-content: start;
+    gap: 5px;
+    width: 100%;
+   
+}
+
 button {
     padding: 10px;
     background-color: #252734;
@@ -164,4 +172,19 @@ button {
 .google_icon {
     width: 24px;
     height: 24px;
+}
+
+@media (max-width: 576px) {
+    .login-left{
+        display: none;
+        width: 100%;
+    }
+    .login-right{
+        width: 100%;
+    }
+
+    .signup-content {
+        width: 70%;
+    }
+    
 }

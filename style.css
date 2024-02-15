@@ -1,3 +1,7 @@
+/* ----------------------------------------------------------------------------------------------------------------
+                                         Global stsyles
+ ------------------------------------------------------------------------------------------------------------------*/
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -8,14 +12,15 @@ a {
   text-decoration: none;
 }
 
-
 body {
   background-color: #2a2c39;
   font-family: "Poppins", sans-serif;
   font-style: normal;
 }
 
-/* Sections Headings */
+/* ----------------------------------------------------------------------------------------------------------------
+                                         General section styling
+ ------------------------------------------------------------------------------------------------------------------*/
 
 section {
   padding: 0 30px;
@@ -27,6 +32,7 @@ section {
 .section-title {
   font-size: 42px;
   text-align: center;
+  position: relative;
 }
 
 .section-description {
@@ -34,7 +40,16 @@ section {
   margin: 20px auto;
 }
 
-/* Navbar section */
+@media (max-width: 991px) {
+  .section-description {
+    font-size: 1rem;
+    text-align: center;
+  }
+}
+
+/* ----------------------------------------------------------------------------------------------------------------
+                                         Navbar section
+ ------------------------------------------------------------------------------------------------------------------*/
 
 #navbar {
   display: flex;
@@ -42,6 +57,7 @@ section {
   align-items: center;
   padding: 0 2rem;
 }
+
 .logo {
   font-size: 3rem;
 }
@@ -51,13 +67,11 @@ section {
   align-items: center;
   gap: 20px;
 }
-.nav-Links {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 .nav-Links ul {
+  display: flex;
+  align-items: start;
   list-style: none;
+  width: 100%;
 }
 .nav-Links ul a {
   display: inline-block;
@@ -88,7 +102,6 @@ section {
   display: none;
 }
 
-
 @media (max-width: 991px) {
   #navbar {
     padding: 0 1rem;
@@ -101,12 +114,45 @@ section {
 @media (max-width: 768px) {
   .navbarLinks {
     display: none;
+    width: 100%;
   }
-  
-  .mobile-toggle  {
+  .navbarLinks.mobile {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 42px;
+    right: 0;
+    background-color: #000;
+    width: 150px;
+    text-align: left;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .navbarLinks.mobile .nav-Links {
+    width: 100%;
+  }
+  .navbarLinks.mobile .nav-Links ul,
+  .siggning-links {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin: 0;
+    width: 100%;
+  }
+
+  .navbarLinks.mobile .nav-Links ul li {
+    width: 100%;
+  }
+  .navbarLinks.mobile .nav-Links ul li a {
+    width: 100%;
+  }
+
+  .mobile-toggle {
     display: block;
   }
 }
+
 /* Hello section */
 
 #hello {
@@ -132,7 +178,7 @@ section {
 }
 
 .hello-text button {
-  color: #fff;
+  color: #858792;
   background-color: #000;
   padding: 20px;
   font-size: 1rem;
@@ -151,13 +197,19 @@ section {
 @media (max-width: 768px) {
   #hello {
     width: 100%;
-    height: unset;
+    height: auto;
 
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     justify-content: center;
     gap: 40px;
     background-image: url("./Assets/images/particles_bg.png");
+  }
+
+  .hello-text {
+    align-items: center;
+    margin-top: 3rem;
+    gap: 20px;
   }
 
   .myimage-wrapper {
@@ -209,7 +261,26 @@ section {
 @media (max-width: 768px) {
   .info-row {
     flex-direction: column;
-    width: 90%;
+
+    padding: 10px;
+    gap: 20px;
+    width: 92%;
+    margin: 30px auto;
+    background-color: #252734;
+    border-radius: 10px;
+  }
+
+  .info-row .col ul li {
+    color: #858792;
+    font-size: 0.9rem;
+    text-wrap: nowrap;
+  }
+  .info-row .col ul li span {
+    color: #fff;
+  }
+  .info-row .col ul li span {
+    font-weight: bold;
+    margin-right: 5px;
   }
 }
 /* ----------------------------------------------------------------------
@@ -253,16 +324,36 @@ section {
   animation: progress 0.4s ease-in-out forwards;
   opacity: 0;
 }
+.skill-per.html {
+  width: 95%;
+  animation-delay: 0.1s;
+}
 .skill-per.css {
-  width: 90%;
+  width: 85%;
   animation-delay: 0.1s;
 }
 .skill-per.javascript {
-  width: 85%;
+  width: 90%;
   animation-delay: 0.2s;
 }
 .skill-per.nodejs {
-  width: 67%;
+  width: 70%;
+  animation-delay: 0.3s;
+}
+.skill-per.reactjs {
+  width: 90%;
+  animation-delay: 0.3s;
+}
+.skill-per.boostrap {
+  width: 85%;
+  animation-delay: 0.3s;
+}
+.skill-per.mongodb {
+  width: 80%;
+  animation-delay: 0.3s;
+}
+.skill-per.postgres {
+  width: 70%;
   animation-delay: 0.3s;
 }
 @keyframes progress {
@@ -277,11 +368,11 @@ section {
 .skill-per .tooltip {
   position: absolute;
   right: -10px;
-  top: -28px;
+  top: -22px;
   font-size: 9px;
   font-weight: 500;
   color: #000;
-  padding: 2px 6px;
+  padding: 2px 5px;
   border-radius: 3px;
   background: #fff;
   z-index: 1;
@@ -291,8 +382,8 @@ section {
   position: absolute;
   left: 50%;
   bottom: -2px;
-  height: 10px;
-  width: 10px;
+  height: 6px;
+  width: 6px;
   z-index: -1;
   background-color: #fff;
   transform: translateX(-50%) rotate(45deg);
@@ -307,6 +398,11 @@ section {
     align-items: center;
     margin: 0 auto;
     width: 100%;
+  }
+
+  .skills-content .col {
+    width: 50%;
+    padding-top: 0px;
   }
 
   .skills-content {
@@ -324,8 +420,9 @@ section {
     padding: 10px;
   }
 }
+
 /* ------------------------------------------------------------------
-                               Statistical facts section 
+                              Milestones section 
 -----------------------------------------------------------------------*/
 
 .statistics-counts {
@@ -419,7 +516,9 @@ section {
   }
 }
 
-/* Testimonial section */
+/* ------------------------------------------------------------------
+                              Testimonial section
+-----------------------------------------------------------------------*/
 
 .swiper-container {
   overflow: hidden;
@@ -473,13 +572,15 @@ section {
 }
 .swiper-pagination {
   position: absolute;
-  bottom: 10px;
+  bottom: 50%;
   left: -200px;
   width: 100%;
   text-align: center;
 }
 
-/* Portfolio */
+/* ------------------------------------------------------------------
+                              Portfolio section
+-----------------------------------------------------------------------*/
 
 .portifolio-list {
   display: grid;
@@ -517,7 +618,10 @@ section {
     width: 95%;
   }
 }
-/* Blogs section */
+
+/* ------------------------------------------------------------------
+                              Blogs section
+-----------------------------------------------------------------------*/
 
 .swiper-slide.blog-swipper-slide {
   display: flex;
@@ -570,7 +674,9 @@ section {
   padding-left: 5px;
 }
 
-/* Contact-us  section */
+/* ------------------------------------------------------------------
+                               Contact-us section
+-----------------------------------------------------------------------*/
 
 .row {
   display: flex;
@@ -653,7 +759,9 @@ button[type="submit"]:hover {
   }
 }
 
-/* Social Media section */
+/* ------------------------------------------------------------------
+                              Social Media section
+-----------------------------------------------------------------------*/
 
 .social-media {
   display: flex;
@@ -687,7 +795,10 @@ button[type="submit"]:hover {
     align-items: center;
   }
 }
-/* Newsletter */
+
+/* ------------------------------------------------------------------
+                              Newsletter section
+-----------------------------------------------------------------------*/
 
 .newsletter {
   width: 70%;
@@ -732,7 +843,9 @@ button[type="submit"]:hover {
   }
 }
 
-/* Footer section */
+/* ------------------------------------------------------------------
+                              Footer section
+-----------------------------------------------------------------------*/
 
 .footer {
   display: flex;

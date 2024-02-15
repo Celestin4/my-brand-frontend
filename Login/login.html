@@ -30,33 +30,37 @@
         <div class="col login-right">
             <h3>Login to your Account</h3>
 
-            <div class="login-content">
+            <form class="login-content"  onsubmit="return validateForm()">
                 <div class="login-form">
                     <div class="form-group">
-                        <label for="">Email</label>
-                        <input type="email" name="" id="" placeholder="Enter your Email">
+                        <label for="user-email">Email</label>
+                        <input type="email" name="" id="user-email" placeholder="Enter your Email" required>
                     </div>
                     <div class="form-group">
-                        <label for="">Password</label>
-                        <input type="password" name="" id="" placeholder="Enter your Password">
+                        <label for="password">Password</label>
+                        <input type="password" name="" id="password" placeholder="Enter your Password" required>
                     </div>
-                    <div class="input-checkbox">
-                        <input type="checkbox" name="" id=""> <span>Remember me</span>
+                    <div class="toggle-password">
+                        <input type="checkbox" id="togglePassword">
+                        <label for="togglePassword">Show Password</label>
                     </div>
+                    
                 </div>
     
                 <div class="login-buttons">
-                    <button>SIGN IN</button>
+                    <button type="submit">SIGN IN</button>
         
-                    <button class="sign-with-google"><img src="../Assets/images/google_icon.svg" alt="" class="google_icon">Continue with Google</button>
+                    <button type="button" class="sign-with-google"><img src="../Assets/images/google_icon.svg" alt="" class="google_icon">Continue with Google</button>
                     <p>Don’t have an account?  <a href="../Signup/signup.html"> Sign Up</a></p>
                 </div>
-            </div>
+            </form>
             
         </div>
 
        
     </section>
+
+    <script src="./login.js"></script>
     
 </body>
 </html>

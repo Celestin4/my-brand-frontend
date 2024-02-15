@@ -19,6 +19,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
   </head>
   <body>
+
     <!-------------------------------------------------------------------------------
                                              Navbar section    
   ------------------------------------------------------------------------------ -->
@@ -26,32 +27,41 @@
     <div id="navbar">
       <div class="logo">Celestin</div>
 
-      <div class="navbarLinks">
+      <div class="navbarLinks" id="navbarLinks">
         <div class="nav-Links">
           <ul>
-            <a href="#">Home</a>
+            <li>
+              <a href="#" class="navlink">Home</a>
+            </li>
+            <li>
+              <a href="#about" class="navlink">About</a>
+            </li>
+            <li>
+              <a href="#portfolio" class="navlink">Portfolio</a>
+            </li>
+            <li>
+              <a href="#blog" class="navlink">Blogs</a>
+            </li>
+            <li>
+              <a href="#contact-us" class="navlink">Contact us</a>
+            </li>
           </ul>
-          <ul>
-            <a href="#about">About</a>
-          </ul>
-          <ul>
-            <a href="#portfolio">Portfolio</a>
-          </ul>
-          <ul>
-            <a href="#blog">Blogs</a>
-          </ul>
-          <ul>
-            <a href="#contact-us">Contact us</a>
-          </ul>
+          
         </div>
 
         <div class="siggning-links">
-          <a href="./Login/login.html">Login</a>
-          <a href="./Signup/signup.html">Signup</a>
+          <a href="./Login/login.html" class="navlink">Login</a>
+          <a href="./Signup/signup.html" class="navlink">Signup</a>
         </div>
       </div>
 
-      <a href="" class="mobile-toggle"><i class="fas fa-bars"></i></a>
+
+      <div class="mobile-toggle">
+        <i class="fas fa-bars"  id="mobile-toggle"></i>
+      </div>
+
+     
+
     </div>
  
     <!-- -----------------------------------------------------------------------------------
@@ -78,16 +88,13 @@
         <div>
           <h2 class="section-title">About</h2>
           <p class="section-description">
-            A professional Fullstack web and UI/UX developer
+            I am Fullstack web developer and UI/UX designer who beilve that  Flexibility and effective communication is must
           </p>
         </div>
 
         <div class="about-row">
           
           
-            <p>
-              Within my work, Flexibility and effective communication is must
-            </p>
             <div class="info-row">
               <div class="col">
                 <ul>
@@ -103,6 +110,7 @@
                     <span class="about-info-title">Degree : </span> BCS of
                     Computer Science
                   </li>
+
                   <li>
                     <span class="about-info-title">Experience : </span> 5 Years
                   </li>
@@ -153,7 +161,7 @@
 
               <div class="skill-bar">
                 <span class="skill-per html">
-                  <span class="tooltip">90%</span>
+                  <span class="tooltip">95%</span>
                 </span>
               </div>
             </div>
@@ -172,7 +180,7 @@
 
               <div class="skill-bar">
                 <span class="skill-per javascript">
-                  <span class="tooltip">80%</span>
+                  <span class="tooltip">90%</span>
                 </span>
               </div>
             </div>
@@ -192,7 +200,7 @@
               <span class="title">REACTJS</span>
 
               <div class="skill-bar">
-                <span class="skill-per html">
+                <span class="skill-per reactjs">
                   <span class="tooltip">90%</span>
                 </span>
               </div>
@@ -202,16 +210,16 @@
               <span class="title">BOOTSTRAP</span>
 
               <div class="skill-bar">
-                <span class="skill-per css">
+                <span class="skill-per boostrap">
                   <span class="tooltip">85%</span>
                 </span>
               </div>
             </div>
             <div class="skill-box">
-              <span class="title">MONGO</span>
+              <span class="title">MONGODB</span>
 
               <div class="skill-bar">
-                <span class="skill-per javascript">
+                <span class="skill-per mongodb">
                   <span class="tooltip">80%</span>
                 </span>
               </div>
@@ -220,7 +228,7 @@
               <span class="title">SQL/POSTGRES</span>
 
               <div class="skill-bar">
-                <span class="skill-per nodejs">
+                <span class="skill-per postgres">
                   <span class="tooltip">70%</span>
                 </span>
               </div>
@@ -231,12 +239,12 @@
     </section>
 
     <!-- -------------------------------------------------------------------------------
-                                Statistical facts section 
+                               Milestones section 
   ------------------------------------------------------------------------------------- -->
 
     <section class="Stastical-facts">
       <div>
-        <h2 class="section-title">Stastical Facts</h2>
+        <h2 class="section-title">Miletones</h2>
         <p class="section-description">
           I expertise in different technologies, frontend, backend and databases
         </p>
