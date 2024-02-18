@@ -1,75 +1,124 @@
-document.getElementById("password").addEventListener("input", validatePassword);
-document.getElementById("confirm-password").addEventListener("input", passwordMatching);
-document.getElementById("togglePassword").addEventListener("change", togglePasswordVisibility);
+// Cache DOM elements
+const fullNameInput = document.getElementById("full-name");
+const emailInput = document.getElementById("user-email");
+const passwordInput = document.getElementById("password");
+const confirmPasswordInput = document.getElementById("confirm-password");
+const passwordError = document.getElementById("passwordError");
+const passwordNotMatchingError = document.getElementById(
+  "password-not-matching-error"
+);
+const togglePasswordCheckbox = document.getElementById("togglePassword");
 
+// Add event listeners
+fullNameInput.addEventListener("input", validateFullName);
+emailInput.addEventListener("input", validateEmail);
+passwordInput.addEventListener("input", validatePassword);
+confirmPasswordInput.addEventListener("input", passwordMatching);
+togglePasswordCheckbox.addEventListener("change", togglePasswordVisibility);
+document
+  .getElementById("signupForm")
+  .addEventListener("submit", handleFormSubmit);
 
+// Initial validation
 passwordMatching();
 
+function createErrorElement(id) {
+  const errorElement = document.createElement("div");
+  errorElement.id = id;
+  errorElement.classList.add("error-message");
+  return errorElement;
+}
+
+function validateFullName() {
+  const fullName = fullNameInput.value.trim();
+  const fullNamePattern = /^[a-zA-Z\s]+$/;
+  let fullNameError = document.getElementById("fullNameError");
+
+  if (!fullNamePattern.test(fullName)) {
+    if (!fullNameError) {
+      fullNameError = createErrorElement("fullNameError");
+      fullNameInput.parentNode.appendChild(fullNameError);
+    }
+    fullNameError.textContent = "Please enter a valid full name";
+  } else {
+    if (fullNameError) {
+      fullNameError.textContent = "";
+    }
+  }
+}
+
+function validateEmail() {
+  const email = emailInput.value.trim();
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  let emailError = document.getElementById("emailError");
+
+  if (!emailPattern.test(email)) {
+    if (!emailError) {
+      emailError = createErrorElement("emailError");
+      emailInput.parentNode.appendChild(emailError);
+    }
+    emailError.textContent = "Please enter a valid email address";
+  } else {
+    if (emailError) {
+      emailError.textContent = "";
+    }
+  }
+}
 
 function validatePassword() {
-    const password = this.value;
-    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-    const passwordError = document.getElementById("passwordError");
+  const password = passwordInput.value;
+  const passwordPattern =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
-    if (!passwordPattern.test(password)) {
-        passwordError.textContent = "Password must be at least 8 characters long and contain at least one letter, one number, and one special character.";
-    } else {
-        passwordError.textContent = "";
-    }
+  passwordError.textContent = passwordPattern.test(password)
+    ? ""
+    : "Password must be at least 8 characters long and contain at least one letter, one number, and one special character.";
 }
 
 function passwordMatching() {
-    const passwordInput = document.getElementById("password");
-    const confirmedPasswordInput = document.getElementById("confirm-password");
-    const passwordNotMatching = document.getElementById("password-not-matching-error");
-
-    if (passwordInput.value !== confirmedPasswordInput.value) {
-        passwordNotMatching.textContent = "Passwords don't match";
-    } else {
-        passwordNotMatching.textContent = "";
-    }
+  passwordNotMatchingError.textContent =
+    passwordInput.value !== confirmPasswordInput.value
+      ? "Passwords don't match"
+      : "";
 }
 
 function togglePasswordVisibility() {
-    const passwordInput = document.getElementById("password");
-    const confirmedPasswordInput = document.getElementById("confirm-password");
-    const isChecked = document.getElementById("togglePassword").checked;
+  const isChecked = togglePasswordCheckbox.checked;
+  const inputType = isChecked ? "text" : "password";
 
-    if (isChecked) {
-        passwordInput.type = "text";
-        confirmedPasswordInput.type = "text"; 
-    } else {
-        passwordInput.type = "password"; 
-        confirmedPasswordInput.type = "password";
-    }
+  passwordInput.type = inputType;
+  confirmPasswordInput.type = inputType;
 
-    passwordMatching();
+  passwordMatching();
 }
 
 
-document.getElementById('signupForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+function handleFormSubmit(event) {
+  event.preventDefault();
 
-    const fullName = document.getElementById('full-name').value;
-    const email = document.getElementById('user-email').value;
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirm-password').value;
+  // Perform validation before submitting the form
+  validateFullName();
+  validateEmail();
+  validatePassword();
+  passwordMatching();
 
-    // Check if passwords match
-    if (password !== confirmPassword) {
-        document.getElementById('password-not-matching-error').innerText = "Passwords do not match";
-        return;
-    }
+  const fullName = fullNameInput.value.trim();
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+  const confirmPassword = confirmPasswordInput.value;
 
-    const userData = {
-        fullName: fullName,
-        email: email,
-        password: password,
-    };
+  // Check if passwords match
+  if (password !== confirmPassword) {
+    passwordNotMatchingError.textContent = "Passwords do not match";
+    return;
+  }
 
-    // Store user data in local storage
-    localStorage.setItem('userData', JSON.stringify(userData));
+  // If all validations pass, proceed with form submission
+  const userData = { fullName, email, password };
 
-    // Optionally, you can redirect the user to another page after signup
-    window.location.href = 'signup_success.html';
-});
+  // Store user data in local storage
+  localStorage.setItem("userData", JSON.stringify(userData));
+
+  // Redirect the user to another page after signup
+  window.location.href = "../index.html";
+}
