@@ -24,45 +24,44 @@
                                              Navbar section    
   ------------------------------------------------------------------------------ -->
 
-    <div id="navbar">
-      <div class="logo">Celestin</div>
-
-      <div class="navbarLinks" id="navbarLinks">
-        <div class="nav-Links">
-          <ul>
-            <li>
-              <a href="#" class="navlink">Home</a>
-            </li>
-            <li>
-              <a href="#about" class="navlink">About</a>
-            </li>
-            <li>
-              <a href="#portfolio" class="navlink">Portfolio</a>
-            </li>
-            <li>
-              <a href="#blog" class="navlink">Blogs</a>
-            </li>
-            <li>
-              <a href="#contact-us" class="navlink">Contact us</a>
-            </li>
-          </ul>
-          
-        </div>
-
-        <div class="siggning-links">
-          <a href="./Login/login.html" class="navlink">Login</a>
-          <a href="./Signup/signup.html" class="navlink">Signup</a>
-        </div>
+  <div id="navbar">
+    <div class="logo">Celestin</div>
+  
+    <div class="navbarLinks" id="navbarLinks">
+      <div class="nav-Links">
+        <ul>
+          <li>
+            <a href="#" class="navlink">Home</a>
+          </li>
+          <li>
+            <a href="#about" class="navlink">About</a>
+          </li>
+          <li>
+            <a href="#portfolio" class="navlink">Portfolio</a>
+          </li>
+          <li>
+            <a href="#blog" class="navlink">Blogs</a>
+          </li>
+          <li>
+            <a href="#contact-us" class="navlink">Contact us</a>
+          </li>
+          <li>
+            <a href="./dashboard/dashbord.html" class="navlink">Dashboard</a> <!-- New Dashboard link -->
+          </li>
+        </ul>
       </div>
-
-
-      <div class="mobile-toggle">
-        <i class="fas fa-bars"  id="mobile-toggle"></i>
+  
+      <div class="siggning-links">
+        <a href="./Login/login.html" class="navlink">Login</a>
+        <a href="./Signup/signup.html" class="navlink">Signup</a>
       </div>
-
-     
-
     </div>
+  
+    <div class="mobile-toggle">
+      <i class="fas fa-bars" id="mobile-toggle"></i>
+    </div>
+  </div>
+  
  
     <!-- -----------------------------------------------------------------------------------
                                  Hello section 
@@ -605,75 +604,43 @@
     <section class="contact-us">
       <div>
         <h2 class="section-title">Contact</h2>
-        <p  class="section-description">
-          Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex
-          aliquid fuga eum quidem. Sit sint consectetur velit.
+        <p class="section-description">
+          Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit.
         </p>
       </div>
-
+    
       <div class="row">
         <div class="contact-col contact-col-right">
-          <form>
+          <form id="contactForm">
             <div class="mesenger-info">
               <div class="form-group">
-                <input
-                  type="text"
-                  name="name"
-                  class="form-control"
-                  id="name"
-                  placeholder="Your Name"
-                  required
-                />
+                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required />
               </div>
               <div class="form-group">
-                <input
-                  type="email"
-                  class="form-control"
-                  name="email"
-                  id="email"
-                  placeholder="Your Email"
-                  required
-                />
+                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required />
               </div>
             </div>
-
+    
             <div class="form-group message-subject">
-              <input
-                type="text"
-                class="form-control"
-                name="subject"
-                id="subject"
-                placeholder="Subject"
-                required
-              />
+              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required />
             </div>
-
+    
             <div class="form-group messege-content">
-              <textarea
-                class="form-control"
-                name="message"
-                rows="5"
-                placeholder="Message"
-                required
-              ></textarea>
+              <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
             </div>
-
+    
             <div class="text-center">
               <button type="submit">Send Message</button>
             </div>
           </form>
         </div>
-
+    
         <div class="contact-col contact-col-left">
-          <iframe
-            class="map"
-            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15953.030520337506!2d30.0666722!3d-1.9644235!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDU4JzQ3LjUiUyAzMMKwMDYnNDQuMCJF!5e0!3m2!1sen!2sbg!4v1644146886738!5m2!1sen!2sbg"
-            frameborder="0"
-            allowfullscreen
-          ></iframe>
+          <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15953.030520337506!2d30.0666722!3d-1.9644235!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDU4JzQ3LjUiUyAzMMKwMDYnNDQuMCJF!5e0!3m2!1sen!2sbg!4v1644146886738!5m2!1sen!2sbg" frameborder="0" allowfullscreen></iframe>
         </div>
       </div>
     </section>
+    
 
     
        <!-- -------------------------------------------------------------------------------

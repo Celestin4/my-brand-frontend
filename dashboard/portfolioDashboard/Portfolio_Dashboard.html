@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Portfolio Dashboard</title>
+    <link rel="stylesheet" href="../dashboard.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo-details">
+        <div class="logo_name">Celestin</div>
+        <i class="bx bx-menu" id="btn"></i>
+      </div>
+      <ul class="nav-list">
+        <li>
+          <a href="../dashbord.html">
+            <i class="bx bx-grid-alt"></i>
+            <span class="links_name">Dashboard</span>
+          </a>
+          <span class="tooltip">Dashboard</span>
+        </li>
+        <li>
+          <a href="../usersDashboard/UsersDashboard.html">
+            <i class="bx bx-user"></i>
+            <span class="links_name">User</span>
+          </a>
+          <span class="tooltip">User</span>
+        </li>
+        <li>
+          <a href="../portfolioDashboard/Portfolio_Dashboard.html">
+            <i class="bx bx-chat"></i>
+            <span class="links_name">Portfolio</span>
+          </a>
+          <span class="tooltip">Portfolio</span>
+        </li>
+        <li>
+          <a href="../blogDashbord/BlogDashboard.html">
+            <i class="bx bx-pie-chart-alt-2"></i>
+            <span class="links_name">Blogs</span>
+          </a>
+          <span class="tooltip">Blogs</span>
+        </li>
+        <li>
+          <a href="../messageDashboard/messageDashboard.html">
+            <i class="bx bx-folder"></i>
+            <span class="links_name">Messages</span>
+          </a>
+          <span class="tooltip">Messages</span>
+        </li>
+      </ul>
+    </div>
+    <section class="home-section">
+      <div class="user-section-wrapper">
+        <div class="dashbord-section-heading">
+          <button onclick="openAddNewPortfolioModal()">
+            Add New Portfolio
+          </button>
+        </div>
+        <div class="portfolio-wrapper" id="portfolioWrapper"></div>
+      </div>
+    </section>
+
+    <div id="addNewPortfolioModal" class="modal">
+      <div class="modal-content">
+        <h3>Create new B</h3>
+        <span class="close" onclick="closeAddNewPortfolioModal()">&times;</span>
+        <form id="addBlogForm">
+          <label for="image">Image Upload (JPG or PNG):</label>
+          <input
+            type="file"
+            id="image"
+            name="image"
+            accept="image/jpeg, image/png"
+            required
+          />
+
+          <label for="title">Title:</label>
+          <input type="text" id="title" name="title" required />
+
+          <label for="headline">Github Link:</label>
+          <input type="text" id="headline" name="headline" required />
+
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
+    </div>
+
+    <div id="updatePortfolioModal" class="modal">
+      <div class="modal-content">
+        <h3>Update this portfolio</h3>
+        <span class="close" onclick="closeUpdatePortfolioModal()">&times;</span>
+        <form id="updateBlogForm">
+          <label for="updateImage">Image Upload (JPG or PNG):</label>
+          <input
+            type="file"
+            id="updateImage"
+            name="updateImage"
+            accept="image/jpeg, image/png"
+          />
+
+          <label for="portfolioTitle">Title:</label>
+          <input
+            type="text"
+            id="portfolioTitle"
+            name="portfolioTitle"
+            required
+          />
+
+          <label for="githubLink">Github Link:</label>
+          <input type="text" id="githubLink" name="githubLink" required />
+
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
+    </div>
+
+    <script src="../dashboard.js"></script>
+    <script src="./portfolioDashboard.js"></script>
+  </body>
+</html>

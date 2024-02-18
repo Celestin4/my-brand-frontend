@@ -46,3 +46,30 @@ function togglePasswordVisibility() {
     passwordMatching();
 }
 
+
+document.getElementById('signupForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const fullName = document.getElementById('full-name').value;
+    const email = document.getElementById('user-email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+
+    // Check if passwords match
+    if (password !== confirmPassword) {
+        document.getElementById('password-not-matching-error').innerText = "Passwords do not match";
+        return;
+    }
+
+    const userData = {
+        fullName: fullName,
+        email: email,
+        password: password,
+    };
+
+    // Store user data in local storage
+    localStorage.setItem('userData', JSON.stringify(userData));
+
+    // Optionally, you can redirect the user to another page after signup
+    window.location.href = 'signup_success.html';
+});
