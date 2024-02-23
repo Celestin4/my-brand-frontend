@@ -1,24 +1,29 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
+  
   const messageTable = document.getElementById("messageTable");
-  const messages = JSON.parse(localStorage.getItem("messages")) || [];
 
-  // Function to populate the table with messages
-  function populateTable() {
+  function displayMessages(messages) {
     const tbody = messageTable.querySelector("tbody");
-    tbody.innerHTML = ""; // Clear existing rows
-
-    messages.forEach((message, index) => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
+    tbody.innerHTML = messages.map(message => `
+      <tr>
         <td>${message.email}</td>
         <td>${message.subject}</td>
         <td>${message.message}</td>
-        <td>${message.date}</td>
-      `;
-      tbody.appendChild(row);
-    });
+        <td>${new Date(message.createdAt).toLocaleString()}</td>
+      </tr>`).join('');
   }
 
-  // Populate the table when the page loads
-  populateTable();
+  async function fetchMessagesFromBackend() {
+    try {
+      const response = await fetch('http://localhost:3000/api/messages/getAllMessages');
+      if (!response.ok) {
+        throw new Error('Failed to fetch messages');
+      }
+      const data = await response.json();
+      displayMessages(data);
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+    }
+  }
+  await fetchMessagesFromBackend(); 
 });

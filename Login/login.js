@@ -1,39 +1,60 @@
-
-document.getElementById("togglePassword").addEventListener("change", togglePasswordVisibility);
+document
+  .getElementById("togglePassword")
+  .addEventListener("change", togglePasswordVisibility);
 
 function togglePasswordVisibility() {
-    const passwordInput = document.getElementById("password");
-    const isChecked = document.getElementById("togglePassword").checked;
+  const passwordInput = document.getElementById("password");
+  const isChecked = document.getElementById("togglePassword").checked;
 
-    if (isChecked) {
-        passwordInput.type = "text"; // Show password
-    } else {
-        passwordInput.type = "password"; // Mask password
-    }
+  if (isChecked) {
+    passwordInput.type = "text";
+  } else {
+    passwordInput.type = "password";
+  }
 }
 
+document
+  .getElementById("loginForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
 
-function validateForm() {
-    const userEmail = document.getElementById("user-email").value;
-    const password = document.getElementById("password").value;
+    validateForm();
+  });
 
-    // Retrieve user data from local storage
-    const storedUserData = localStorage.getItem('userData');
+async function validateForm() {
+  const userEmail = document.getElementById("user-email").value;
+  const password = document.getElementById("password").value;
 
-    if (!storedUserData) {
-        alert("No user found. Please sign up first.");
-        return false; // Prevent form submission
-    }
+  const userData = {
+    email: userEmail,
+    password: password,
+  };
 
-    // Parse stored user data
-    const userData = JSON.parse(storedUserData);
+  try {
+    const response = await fetch(
+      "https://my-brand-backend-8mqk.onrender.com/api/users/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      }
+    );
 
-    // Check if the provided email and password match stored user data
-    if (userData.email === userEmail && userData.password === password) {
-        alert("Login successful!");
-        return true; // Allow form submission
+    const loggedUser = await response.json();
+
+    if (response.ok) {
+      localStorage.setItem("loggedUser", JSON.stringify(loggedUser));
+      console.log(loggedUser);
+      window.location.href = "../index.html";
     } else {
-        alert("Invalid email or password. Please try again.");
-        return false; // Prevent form submission
+      const errorData = await response.user;
+      // alert("Error: " + errorData);
+      console.log(errorData);
     }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("An error occurred. Please try again.");
+  }
 }
