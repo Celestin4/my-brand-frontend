@@ -23,46 +23,57 @@
     <!-------------------------------------------------------------------------------
                                              Navbar section    
   ------------------------------------------------------------------------------ -->
-
   <div id="navbar">
     <div class="logo">Celestin</div>
-  
+
     <div class="navbarLinks" id="navbarLinks">
-      <div class="nav-Links">
-        <ul>
-          <li>
-            <a href="#" class="navlink">Home</a>
-          </li>
-          <li>
-            <a href="#about" class="navlink">About</a>
-          </li>
-          <li>
-            <a href="#portfolio" class="navlink">Portfolio</a>
-          </li>
-          <li>
-            <a href="#blog" class="navlink">Blogs</a>
-          </li>
-          <li>
-            <a href="#contact-us" class="navlink">Contact us</a>
-          </li>
-          <li>
-            <a href="./dashboard/dashbord.html" class="navlink dashboard-navlink">Dashboard</a> <!-- New Dashboard link -->
-          </li>
-        </ul>
-      </div>
-  
-      <div class="siggning-links">
-        <a href="./Login/login.html" class="navlink">Login</a>
-        <a href="./Signup/signup.html" class="navlink">Signup</a>
-      </div>
+        <div class="nav-Links">
+            <ul>
+                <li>
+                    <a href="#" class="navlink">Home</a>
+                </li>
+                <li>
+                    <a href="#about" class="navlink">About</a>
+                </li>
+                <li>
+                    <a href="#portfolio" class="navlink">Portfolio</a>
+                </li>
+                <li>
+                    <a href="#blog" class="navlink">Blogs</a>
+                </li>
+                <li>
+                    <a href="#contact-us" class="navlink">Contact us</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="dashboard-navlink">
+            <ul>
+                <li>
+                    <a href="./dashboard/dashbord.html" class='navlink'>Dashboard</a> 
+                </li>
+                <li class="dropdown">
+                  <span class="user-icon"> <i class='fas fa-user-circle people-icon'></i><i class="fa fa-angle-down down-arrow" ></i></span>
+                 
+                    <div class="dropdown-content">
+                        <a href="#" id="Profile-link">Profile</a>
+                        <span id="loggout-button">Logout</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="siggning-links">
+            <a href="./Login/login.html" class="navlink">Login</a>
+            <a href="./Signup/signup.html" class="navlink">Signup</a>
+        </div>
     </div>
-  
+
     <div class="mobile-toggle">
-      <i class="fas fa-bars" id="mobile-toggle"></i>
+        <i class="fas fa-bars" id="mobile-toggle"></i>
     </div>
-  </div>
-  
- 
+</div>
+
     <!-- -----------------------------------------------------------------------------------
                                  Hello section 
     -------------------------------------------------------------------------------------->
@@ -303,14 +314,17 @@
                                 Testimonial section 
   ------------------------------------------------------------------------------------- -->
 
-    <section class="swiper testimonial-swipper">
-      <div>
-        <h2 class="section-title">Testimonial</h2>
-        <p  class="section-description">
-          Here is what our Clients are saying About us
-        </p>
-      </div>
-      <div class="swiper-wrapper">
+  <section class="tstimonial">
+    <div>
+      <h2 class="section-title">Testimonial</h2>
+      <p  class="section-description">
+        Here is what our Clients are saying About us
+      </p>
+    </div>
+
+    <div class="swiper testimonial-swipper">
+      
+      <div class=" swiper-wrapper">
         <div class="swiper-slide testimonial-swiper-slide">
          <div class="testimonial-card">
           <div class="testominial_slide">
@@ -429,12 +443,16 @@
       </div>
       <div class="swiper-button-next"></div>
       <div class="swiper-button-prev"></div>
-    </section>
+    </div>
+
+  </section>
+
+    
     <!-- -------------------------------------------------------------------------------
                                   Portifolio section 
     ------------------------------------------------------------------------------------->
 
-    <section>
+    <section id="portfolio">
       <div class="container">
         <div>
           <h2 class="section-title">Portifolio</h2>
@@ -598,7 +616,7 @@
                                   Contact section 
     ------------------------------------------------------------------------------------->
 
-    <section class="contact-us">
+    <section id="contact-us" class="contact-us">
       <div>
         <h2 class="section-title">Contact</h2>
         <p class="section-description">

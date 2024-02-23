@@ -81,7 +81,8 @@ function togglePasswordVisibility() {
 
     passwordMatching();
 }
-function handleFormSubmit(event) {
+
+async function handleFormSubmit(event) {
     event.preventDefault();
 
     // Perform validation before submitting the form
@@ -101,31 +102,30 @@ function handleFormSubmit(event) {
         return;
     }
 
-    // If all validations pass, proceed with form submission
     const userData = { fullName, email, password };
 
-    // Make a POST request to your backend server
-    fetch('http://localhost:3000/api/users/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-    })
-    .then(response => {
+    try {
+        // Make a POST request to your backend server
+        const response = await fetch('http://localhost:3000/api/users/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+        });
+
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        return response.json();
-    })
-    .then(data => {
+
+        const loggedUser = await response.json();
+        localStorage.setItem("loggedUser", JSON.stringify(loggedUser));
         // Handle successful registration
-        console.log(data);
+        console.log(loggedUser);
         // Redirect the user to another page after signup
         window.location.href = "../index.html";
-    })
-    .catch(error => {
+    } catch (error) {
         // Handle error
         console.error('There was a problem with your fetch operation:', error);
-    });
+    }
 }

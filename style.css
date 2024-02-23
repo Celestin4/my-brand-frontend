@@ -1,17 +1,16 @@
 /* ----------------------------------------------------------------------------------------------------------------
                                          Variables declaration
  ------------------------------------------------------------------------------------------------------------------*/
- :root {
+:root {
   --pure-white: #fff;
   --wheat-white: #838383;
   --lighten-background: #2a2c39;
-  --deepen-background:#000;
+  --deepen-background: #000;
   --font-family: "Poppins", sans-serif;
   --input-text-color: #000;
+}
 
- }
-
- /* ----------------------------------------------------------------------------------------------------------------
+/* ----------------------------------------------------------------------------------------------------------------
                                          Global stsyles
  ------------------------------------------------------------------------------------------------------------------*/
 
@@ -32,7 +31,8 @@ body {
   font-style: normal;
 }
 
-input, textarea {
+input,
+textarea {
   color: var(--input-text-color);
 }
 
@@ -66,29 +66,37 @@ section {
 /* ----------------------------------------------------------------------------------------------------------------
                                          Navbar section
  ------------------------------------------------------------------------------------------------------------------*/
-
+/* Global styles */
 #navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
+  text-wrap: nowrap;
 }
 
 .logo {
   font-size: 3rem;
 }
+
 .navbarLinks {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
 }
+
+.nav-Links {
+  display: flex;
+}
+
 .nav-Links ul {
   display: flex;
-  align-items: start;
+  align-items: center;
   list-style: none;
   width: 100%;
 }
+
 .nav-Links ul a {
   display: inline-block;
   padding: 16px 10px;
@@ -118,6 +126,75 @@ section {
   display: none;
 }
 
+/* User icon dropdown */
+.user-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  line-height: 24px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: -10px;
+  top: 25px;
+  background-color: #f9f9f9;
+  min-width: 120px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a,
+.dropdown-content span {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown-content a:hover,
+.dropdown-content span:hover {
+  background-color: grey;
+}
+
+.dropdown:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  color: #000;
+}
+
+.people-icon {
+  font-size: 1.5rem;
+}
+.down-arrow {
+  margin-left: 5px;
+  font-size: 1rem;
+}
+
+/* Dashboard navigation link */
+.dashboard-navlink {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard-navlink li {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+}
+
+/* Media Queries */
 @media (max-width: 991px) {
   #navbar {
     padding: 0 1rem;
@@ -157,6 +234,10 @@ section {
     width: 100%;
   }
 
+  .siggning-links a {
+    display: block;
+  }
+
   .navbarLinks.mobile .nav-Links ul li {
     width: 100%;
   }
@@ -167,14 +248,48 @@ section {
   .mobile-toggle {
     display: block;
   }
-}
 
+  .dashboard-navlink  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+  .user-icon {
+    display: none;
+  }
+
+  .dropdown {
+    position: static;
+  }
+
+  .dropdown .dropdown-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: static;
+    background-color: transparent;
+    box-shadow: none;
+    text-align: left;
+    margin-top: 20px;
+  }
+
+  .dropdown .dropdown-content a, .dropdown .dropdown-content span {
+    display: inline-block;
+    padding: 10px 0;
+    color: #fff;
+    width: 100%;
+    margin-left: 0;
+    text-align: left;
+
+  }
+
+  
+}
 
 /* ----------------------------------------------------------------------------------------------------------------
                                          Hello section
  ------------------------------------------------------------------------------------------------------------------*/
-
-
 
 #hello {
   width: 100%;
@@ -604,6 +719,8 @@ section {
   width: 100%;
   text-align: center;
 }
+
+
 
 /* ------------------------------------------------------------------
                               Portfolio section

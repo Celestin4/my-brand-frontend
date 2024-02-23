@@ -28,14 +28,15 @@ window.addEventListener("click", (event) => {
 // Function to fetch all blog posts from the backend
 const fetchAllBlogs = async () => {
   try {
-    const response = await fetch('http://localhost:3000/api/blogs/getAllPosts');
+    const response = await fetch("http://localhost:3000/api/blogs/getAllPosts");
     if (!response.ok) {
-      throw new Error('Failed to fetch blogs');
+      throw new Error("Failed to fetch blogs");
     }
     const blogs = await response.json();
+    console.log(blogs);
     displayBlogs(blogs);
   } catch (error) {
-    console.error('Error fetching blogs:', error.message);
+    console.error("Error fetching blogs:", error.message);
   }
 };
 
@@ -62,6 +63,7 @@ const displayBlogs = (blogs) => {
 };
 
 // Event delegation for update and delete buttons
+
 document.addEventListener("click", async (event) => {
   if (event.target.classList.contains("blog-update-btn")) {
     const index = event.target.dataset.index;
@@ -77,92 +79,134 @@ document.addEventListener("click", async (event) => {
 // Function to add new blog
 const addBlog = async (formData) => {
   try {
-    const response = await fetch('http://localhost:3000/api/blogs/createBlogPost', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData),
-    });
+    const response = await fetch(
+      "http://localhost:3000/api/blogs/createBlogPost",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
+
+    console.log(formData);
     if (!response.ok) {
-      throw new Error('Failed to add blog');
+      throw new Error("Failed to add blog");
     }
     fetchAllBlogs(); // Refresh blogs after adding
     createNewBlogmodal.style.display = "none";
   } catch (error) {
-    console.error('Error adding blog:', error.message);
+    console.error("Error adding blog:", error.message);
   }
 };
+// Event listener for form submission
+document
+  .getElementById("addBlogForm")
+  .addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const formData = {
+      title: event.target.title.value,
+      headlineText: event.target.headline.value,
+      content: event.target.content.value,
+      image: event.target.image.files[0], // Get the selected file from the file input
+    };
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    };
+
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/blogs/createBlogPost",
+        options
+      );
+
+      if (response.ok) {
+        const blogPost = await response.json();
+        // Handle successful response, e.g., render the new blog post
+        console.log("Blog post created:", blogPost);
+      } else {
+        // Handle error response
+        const errorData = await response.json();
+        console.error("Error creating blog post:", errorData.error);
+      }
+    } catch (error) {
+      // Handle fetch error
+      console.error("Fetch error:", error);
+    }
+  });
 
 // Function to update blog
 const updateBlog = async (formData, blogId) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/blogs/updatePost/${blogId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData),
-    });
+    const response = await fetch(
+      `http://localhost:3000/api/blogs/updatePost/${blogId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
     if (!response.ok) {
-      throw new Error('Failed to update blog');
+      throw new Error("Failed to update blog");
     }
     fetchAllBlogs(); // Refresh blogs after updating
     updateBlogModel.style.display = "none";
   } catch (error) {
-    console.error('Error updating blog:', error.message);
+    console.error("Error updating blog:", error.message);
   }
 };
 
 // Function to delete blog
 const deleteBlog = async (blogId) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/blogs/deletePost/${blogId}`, {
-      method: 'DELETE',
-    });
+    const response = await fetch(
+      `http://localhost:3000/api/blogs/deletePost/${blogId}`,
+      {
+        method: "DELETE",
+      }
+    );
     if (!response.ok) {
-      throw new Error('Failed to delete blog');
+      throw new Error("Failed to delete blog");
     }
-    fetchAllBlogs(); // Refresh blogs after deletion
+    fetchAllBlogs();
   } catch (error) {
-    console.error('Error deleting blog:', error.message);
+    console.error("Error deleting blog:", error.message);
   }
 };
 
-// Event listener for form submission
-document.getElementById("addBlogForm").addEventListener("submit", (event) => {
-  event.preventDefault();
-  const formData = {
-    title: event.target.title.value,
-    // headlineText: event.target.headlineText.value,
-    content: event.target.content.value,
-    // date: event.target.date.value,
-    // imageUrl: event.target.imageUrl.value,
-    // author: event.target.author.value
-  };
-  addBlog(formData);
-});
-
 // Event listener for update form submission
-document.getElementById("updateBlogForm").addEventListener("submit", (event) => {
-  event.preventDefault();
-  const formData = {
-    title: event.target.updateTitle.value,
-    headlineText: event.target.updateHeadline.value,
-    content: event.target.updateContent.value,
-    imageUrl: event.target.updateImageUrl.value,
-    author: event.target.updateAuthor.value
-  };
-  const blogId = event.target.blogId.value;
-  updateBlog(formData, blogId);
-});
+document
+  .getElementById("updateBlogForm")
+  .addEventListener("submit", (event) => {
+    event.preventDefault();
+    const formData = {
+      title: event.target.updateTitle.value,
+      headlineText: event.target.updateHeadline.value,
+      content: event.target.updateContent.value,
+      imageUrl: event.target.updateImageUrl.value,
+      author: event.target.updateAuthor.value,
+    };
+    const blogId = event.target.blogId.value;
+    updateBlog(formData, blogId);
+  });
 
 // Function to open update blog model with existing data
 const openUpdateBlogModel = async (index, blogId) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/blogs/getSinglePost/${blogId}`);
+    const response = await fetch(
+      `http://localhost:3000/api/blogs/getSinglePost/${blogId}`
+    );
     if (!response.ok) {
-      throw new Error('Failed to fetch blog details');
+      throw new Error("Failed to fetch blog details");
     }
     const blog = await response.json();
     document.getElementById("updateTitle").value = blog.title;
@@ -173,7 +217,7 @@ const openUpdateBlogModel = async (index, blogId) => {
     document.getElementById("blogId").value = blog._id;
     updateBlogModel.style.display = "block";
   } catch (error) {
-    console.error('Error fetching blog details for update:', error.message);
+    console.error("Error fetching blog details for update:", error.message);
   }
 };
 
