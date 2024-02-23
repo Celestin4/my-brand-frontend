@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const loggoutButton = document.getElementById("loggout-button");
   const contactForm = document.getElementById("contactForm");
   const navlinks = document.querySelectorAll(".navlink");
-  
+
   const testimonialSwiper = new Swiper(".testimonial-swipper", {
     pagination: {
       el: ".swiper-pagination",
@@ -40,16 +40,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   mobileToggler.addEventListener("click", function () {
     navbarLinks.classList.toggle("mobile");
-    mobileToggler.classList.toggle('fa-bars');
-    mobileToggler.classList.toggle('fa-times');
+    mobileToggler.classList.toggle("fa-bars");
+    mobileToggler.classList.toggle("fa-times");
   });
 
   navlinks.forEach(function (navlink) {
     navlink.addEventListener("click", function () {
       navbarLinks.classList.remove("mobile");
-      mobileToggler.classList.toggle('fa-bars');
-    mobileToggler.classList.toggle('fa-times');
-
+      mobileToggler.classList.toggle("fa-bars");
+      mobileToggler.classList.toggle("fa-times");
     });
   });
 
@@ -66,26 +65,46 @@ document.addEventListener("DOMContentLoaded", function () {
 
   updateNavbar();
 
-  contactForm.addEventListener("submit", function (event) {
+  contactForm.addEventListener("submit", async function (event) {
     event.preventDefault();
     const formData = new FormData(contactForm);
     const messageData = {
-      name: formData.get("name"),
+      fullName: formData.get("name"),
       email: formData.get("email"),
       subject: formData.get("subject"),
       message: formData.get("message"),
-      date: new Date().toLocaleString(),
+      createdAt: new Date().toLocaleString(),
     };
-    let messages = JSON.parse(localStorage.getItem("messages")) || [];
-    messages.push(messageData);
-    localStorage.setItem("messages", JSON.stringify(messages));
-    alert("Message sent successfully!");
-    contactForm.reset();
+
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/messages/createMessage",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(messageData),
+        }
+      );
+
+      console.log(messageData);
+
+      if (!response.ok) {
+        throw new Error("Failed to send message.");
+      }
+
+      alert("Message sent successfully!");
+      contactForm.reset();
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Failed to send message. Please try again later.");
+    }
   });
 
   loggoutButton.addEventListener("click", function (e) {
     localStorage.removeItem("loggedUser");
     updateNavbar();
-    window.location.href = '../index.html';
+    window.location.href = "../index.html";
   });
 });

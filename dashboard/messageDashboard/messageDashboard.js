@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", async function() {
+  
   const messageTable = document.getElementById("messageTable");
 
-  // Function to populate the table with messages
   function displayMessages(messages) {
     const tbody = messageTable.querySelector("tbody");
     tbody.innerHTML = messages.map(message => `
@@ -20,11 +20,10 @@ document.addEventListener("DOMContentLoaded", async function() {
         throw new Error('Failed to fetch messages');
       }
       const data = await response.json();
-      displayMessages(data); // Display messages in the table
+      displayMessages(data);
     } catch (error) {
       console.error('Error fetching messages:', error);
     }
   }
-
   await fetchMessagesFromBackend(); 
 });
