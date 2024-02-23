@@ -31,20 +31,23 @@ async function validateForm() {
   };
 
   try {
-    const response = await fetch("http://localhost:3000/api/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    });
+    const response = await fetch(
+      "https://my-brand-backend-8mqk.onrender.com/api/users/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      }
+    );
 
     const loggedUser = await response.json();
 
     if (response.ok) {
       localStorage.setItem("loggedUser", JSON.stringify(loggedUser));
-      console.log(loggedUser)
-      window.location.href= '../index.html';
+      console.log(loggedUser);
+      window.location.href = "../index.html";
     } else {
       const errorData = await response.user;
       // alert("Error: " + errorData);
