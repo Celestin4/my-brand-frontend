@@ -1,14 +1,15 @@
 const createNewBlogmodal = document.getElementById("myModal");
 const updateBlogModel = document.getElementById("updateBlogModel");
-const btn = document.getElementById("myBtn");
-const span = document.querySelector(".close");
+const btnCreateNewBlog = document.getElementById("reateNewBlogmodal");
+const closeCreateNewBlogModel = document.querySelector(".close");
 const closeUpdateBlogModel = document.querySelector(".closeUpdateBlogModel");
 
-btn.addEventListener("click", () => {
+
+btnCreateNewBlog.addEventListener("click", () => {
   createNewBlogmodal.style.display = "block";
 });
 
-span.addEventListener("click", () => {
+closeCreateNewBlogModel.addEventListener("click", () => {
   createNewBlogmodal.style.display = "none";
 });
 
@@ -50,7 +51,7 @@ const displayBlogs = (blogs) => {
         <img src="${blog.imageUrl}" alt="Blog Image" class="blog-img">
         <div class="blog-content">
           <h2>${blog.title}</h2>
-          <p>${blog.content}</p>
+          <p>${blog.headlineText}</p>
           <div class="blog-buttons">
             <button class="blog-update-btn" data-index="${index}" data-id="${blog._id}">Update</button>
             <button class="blog-delete-btn" data-id="${blog._id}">Delete</button>
@@ -94,13 +95,11 @@ const addBlog = async (formData) => {
     if (!response.ok) {
       throw new Error("Failed to add blog");
     }
-    fetchAllBlogs(); // Refresh blogs after adding
-    createNewBlogmodal.style.display = "none";
   } catch (error) {
     console.error("Error adding blog:", error.message);
   }
 };
-// Event listener for form submission
+
 document
   .getElementById("addBlogForm")
   .addEventListener("submit", async (event) => {
@@ -110,7 +109,7 @@ document
       title: event.target.title.value,
       headlineText: event.target.headline.value,
       content: event.target.content.value,
-      image: event.target.image.files[0], // Get the selected file from the file input
+      image: event.target.image.files[0],
     };
 
     const options = {
@@ -129,15 +128,15 @@ document
 
       if (response.ok) {
         const blogPost = await response.json();
-        // Handle successful response, e.g., render the new blog post
         console.log("Blog post created:", blogPost);
+        createNewBlogmodal.style.display = "none";
+        fetchAllBlogs();
+
       } else {
-        // Handle error response
         const errorData = await response.json();
         console.error("Error creating blog post:", errorData.error);
       }
     } catch (error) {
-      // Handle fetch error
       console.error("Fetch error:", error);
     }
   });
@@ -146,7 +145,7 @@ document
 const updateBlog = async (formData, blogId) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/api/blogs/updatePost/${blogId}`,
+      `http://localhost:3000/api/blogs/updateBlogPost/${blogId}`,
       {
         method: "PUT",
         headers: {
@@ -158,10 +157,14 @@ const updateBlog = async (formData, blogId) => {
     if (!response.ok) {
       throw new Error("Failed to update blog");
     }
-    fetchAllBlogs(); // Refresh blogs after updating
+    fetchAllBlogs();
     updateBlogModel.style.display = "none";
   } catch (error) {
+    console.log(formData)
+    console.log('id')
+    console.log(blogId)
     console.error("Error updating blog:", error.message);
+    console.log(error)
   }
 };
 
@@ -169,7 +172,7 @@ const updateBlog = async (formData, blogId) => {
 const deleteBlog = async (blogId) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/api/blogs/deletePost/${blogId}`,
+      `http://localhost:3000/api/blogs/deleteBlogPost/${blogId}`,
       {
         method: "DELETE",
       }
@@ -183,7 +186,6 @@ const deleteBlog = async (blogId) => {
   }
 };
 
-// Event listener for update form submission
 document
   .getElementById("updateBlogForm")
   .addEventListener("submit", (event) => {
@@ -192,15 +194,17 @@ document
       title: event.target.updateTitle.value,
       headlineText: event.target.updateHeadline.value,
       content: event.target.updateContent.value,
-      imageUrl: event.target.updateImageUrl.value,
-      author: event.target.updateAuthor.value,
+      imageUrl: event.target.updateImage.value,
     };
-    const blogId = event.target.blogId.value;
+    const blogId = document.getElementById('updateBlogIndex').value;
+    console.log(blogId)
     updateBlog(formData, blogId);
   });
 
 // Function to open update blog model with existing data
 const openUpdateBlogModel = async (index, blogId) => {
+   updateBlogModel.style.display = "block";
+   console.log(index, blogId);
   try {
     const response = await fetch(
       `http://localhost:3000/api/blogs/getSinglePost/${blogId}`
@@ -209,13 +213,11 @@ const openUpdateBlogModel = async (index, blogId) => {
       throw new Error("Failed to fetch blog details");
     }
     const blog = await response.json();
+    console.log(blog)
     document.getElementById("updateTitle").value = blog.title;
     document.getElementById("updateHeadline").value = blog.headlineText;
     document.getElementById("updateContent").value = blog.content;
-    document.getElementById("updateImageUrl").value = blog.imageUrl;
-    document.getElementById("updateAuthor").value = blog.author;
-    document.getElementById("blogId").value = blog._id;
-    updateBlogModel.style.display = "block";
+    document.getElementById("updateBlogIndex").value = blog.id;
   } catch (error) {
     console.error("Error fetching blog details for update:", error.message);
   }
