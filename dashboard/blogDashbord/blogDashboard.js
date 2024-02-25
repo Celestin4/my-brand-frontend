@@ -3,6 +3,8 @@ const updateBlogModel = document.getElementById("updateBlogModel");
 const btnCreateNewBlog = document.getElementById("reateNewBlogmodal");
 const closeCreateNewBlogModel = document.querySelector(".close");
 const closeUpdateBlogModel = document.querySelector(".closeUpdateBlogModel");
+const updateBlogForm = document.getElementById("updateBlogForm");
+
 
 
 btnCreateNewBlog.addEventListener("click", () => {
@@ -69,6 +71,7 @@ document.addEventListener("click", async (event) => {
   if (event.target.classList.contains("blog-update-btn")) {
     const index = event.target.dataset.index;
     const blogId = event.target.dataset.id;
+    console.log(blogId);
     openUpdateBlogModel(index, blogId);
   }
   if (event.target.classList.contains("blog-delete-btn")) {
@@ -186,9 +189,33 @@ const deleteBlog = async (blogId) => {
   }
 };
 
-document
-  .getElementById("updateBlogForm")
-  .addEventListener("submit", (event) => {
+
+
+  let currentBlogId;
+
+  const openUpdateBlogModel = async (index, blogId) => {
+     updateBlogModel.style.display = "block";
+     currentBlogId = blogId; // Store the blogId in the currentBlogId variable
+     console.log(index, blogId);
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/blogs/getSinglePost/${blogId}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch blog details");
+      }
+      const blog = await response.json();
+      console.log(blog)
+      document.getElementById("updateTitle").value = blog.title;
+      document.getElementById("updateHeadline").value = blog.headlineText;
+      document.getElementById("updateContent").value = blog.content;
+    } catch (error) {
+      console.error("Error fetching blog details for update:", error.message);
+    }
+  };
+  
+  
+  updateBlogForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const formData = {
       title: event.target.updateTitle.value,
@@ -196,32 +223,7 @@ document
       content: event.target.updateContent.value,
       imageUrl: event.target.updateImage.value,
     };
-    const blogId = document.getElementById('updateBlogIndex').value;
-    console.log(blogId)
-    updateBlog(formData, blogId);
+    updateBlog(formData, currentBlogId);
   });
 
-// Function to open update blog model with existing data
-const openUpdateBlogModel = async (index, blogId) => {
-   updateBlogModel.style.display = "block";
-   console.log(index, blogId);
-  try {
-    const response = await fetch(
-      `http://localhost:3000/api/blogs/getSinglePost/${blogId}`
-    );
-    if (!response.ok) {
-      throw new Error("Failed to fetch blog details");
-    }
-    const blog = await response.json();
-    console.log(blog)
-    document.getElementById("updateTitle").value = blog.title;
-    document.getElementById("updateHeadline").value = blog.headlineText;
-    document.getElementById("updateContent").value = blog.content;
-    document.getElementById("updateBlogIndex").value = blog.id;
-  } catch (error) {
-    console.error("Error fetching blog details for update:", error.message);
-  }
-};
-
-// Display blogs when the page loads
 fetchAllBlogs();
