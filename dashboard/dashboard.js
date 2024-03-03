@@ -1,5 +1,6 @@
 let sidebar = document.querySelector(".sidebar");
 let closeBtn = document.querySelector("#btn");
+const logoutBtn = document.getElementById('logout-btn')
 
 closeBtn.addEventListener("click", ()=>{
   sidebar.classList.toggle("open");
@@ -14,5 +15,10 @@ function menuBtnChange() {
    closeBtn.classList.replace("bx-menu-alt-right","bx-menu");
  }
 }
+
+logoutBtn.addEventListener("click", (e) => {
+  localStorage.removeItem("loggedUser")
+  window.location.href = "../Login/login.html"
+})
 
 

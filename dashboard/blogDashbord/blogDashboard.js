@@ -1,3 +1,5 @@
+import Base_URL from '../../API/api.js'
+
 const createNewBlogmodal = document.getElementById("myModal");
 const updateBlogModel = document.getElementById("updateBlogModel");
 const btnCreateNewBlog = document.getElementById("reateNewBlogmodal");
@@ -31,7 +33,7 @@ window.addEventListener("click", (event) => {
 // Function to fetch all blog posts from the backend
 const fetchAllBlogs = async () => {
   try {
-    const response = await fetch("http://localhost:3000/api/blogs/getAllPosts");
+    const response = await fetch(`${Base_URL}/blogs/getAllPosts`);
     if (!response.ok) {
       throw new Error("Failed to fetch blogs");
     }
@@ -50,7 +52,7 @@ const displayBlogs = (blogs) => {
   blogs.forEach((blog, index) => {
     const blogItem = `
       <div class="blog">
-        <img src="${blog.imageUrl}" alt="Blog Image" class="blog-img">
+        <img src="http://localhost:3000/uploads/${blog.imageUrl}" alt="Blog Image" class="blog-img">
         <div class="blog-content">
           <h2>${blog.title}</h2>
           <p>${blog.headlineText}</p>
@@ -84,7 +86,7 @@ document.addEventListener("click", async (event) => {
 const addBlog = async (formData) => {
   try {
     const response = await fetch(
-      "http://localhost:3000/api/blogs/createBlogPost",
+      `${Base_URL}/blogs/createBlogPost`,
       {
         method: "POST",
         headers: {
@@ -125,7 +127,7 @@ document
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/blogs/createBlogPost",
+        `${Base_URL}/blogs/createBlogPost`,
         options
       );
 
@@ -148,7 +150,7 @@ document
 const updateBlog = async (formData, blogId) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/api/blogs/updateBlogPost/${blogId}`,
+      `${Base_URL}/blogs/updateBlogPost/${blogId}`,
       {
         method: "PUT",
         headers: {
@@ -175,7 +177,7 @@ const updateBlog = async (formData, blogId) => {
 const deleteBlog = async (blogId) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/api/blogs/deleteBlogPost/${blogId}`,
+      `${Base_URL}/blogs/deleteBlogPost/${blogId}`,
       {
         method: "DELETE",
       }
@@ -195,11 +197,11 @@ const deleteBlog = async (blogId) => {
 
   const openUpdateBlogModel = async (index, blogId) => {
      updateBlogModel.style.display = "block";
-     currentBlogId = blogId; // Store the blogId in the currentBlogId variable
+     currentBlogId = blogId;
      console.log(index, blogId);
     try {
       const response = await fetch(
-        `http://localhost:3000/api/blogs/getSinglePost/${blogId}`
+        `${Base_URL}/blogs/getSinglePost/${blogId}`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch blog details");

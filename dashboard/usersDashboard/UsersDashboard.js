@@ -1,4 +1,6 @@
-fetch('http://localhost:3000/api/users/listOfUsers/')
+import Base_URL from '../../API/api.js'
+
+fetch(`${Base_URL}/users/listOfUsers/`)
   .then(response => {
     if (response.ok) {
       return response.json();
@@ -57,7 +59,7 @@ function renderUserData(users) {
 }
 
 function deleteUser(userId) {
-    fetch(`http://localhost:3000/api/users/deleteUser/${userId}`, {
+    fetch(`${Base_URL}/users/deleteUser/${userId}`, {
       method: 'DELETE',
     })
     .then(response => {

@@ -1,3 +1,5 @@
+import Base_URL from '../../API/api.js'
+
 document.addEventListener("DOMContentLoaded", async function() {
   
   const messageTable = document.getElementById("messageTable");
@@ -15,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 
   async function fetchMessagesFromBackend() {
     try {
-      const response = await fetch('http://localhost:3000/api/messages/getAllMessages');
+      const response = await fetch(`${Base_URL}/messages/getAllMessages`);
       if (!response.ok) {
         throw new Error('Failed to fetch messages');
       }

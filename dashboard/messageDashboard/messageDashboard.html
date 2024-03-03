@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>Dashboard</title>
     <link rel="stylesheet" href="../dashboard.css" />
+    <link rel="stylesheet" href="./messageDashboard.css">
     <link
       href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
       rel="stylesheet"
@@ -17,6 +18,14 @@
         <i class="bx bx-menu" id="btn"></i>
       </div>
       <ul class="nav-list">
+        <li>
+          <a href="../../index.html">
+            <i class="bx bx-home"></i>
+
+            <span class="links_name">Main Home</span>
+          </a>
+          <span class="tooltip">Main Home</span>
+        </li>
         <li>
           <a href="../dashbord.html">
             <i class="bx bx-grid-alt"></i>
@@ -33,24 +42,33 @@
         </li>
         <li>
           <a href="../portfolioDashboard/Portfolio_Dashboard.html">
-            <i class="bx bx-chat"></i>
+            <i class="bx bx-code"></i>
+
             <span class="links_name">Portfolio</span>
           </a>
           <span class="tooltip">Portfolio</span>
         </li>
         <li>
           <a href="../blogDashbord/BlogDashboard.html">
-            <i class="bx bx-pie-chart-alt-2"></i>
+            <i class="bx bx-message-square-edit"></i>
+
             <span class="links_name">Blogs</span>
           </a>
           <span class="tooltip">Blogs</span>
         </li>
         <li>
-          <a href="../messageDashboard/messageDashboard.html">
-            <i class="bx bx-folder"></i>
+          <a href="./messageDashboard.html">
+            <i class="bx bx-chat"></i>
             <span class="links_name">Messages</span>
           </a>
           <span class="tooltip">Messages</span>
+        </li>
+        <li>
+          <a id="logout-btn">
+            <i class='bx bx-log-in-circle'></i>
+            <span class="links_name">Loggut</span>
+          </a>
+          <span class="tooltip">Logout</span>
         </li>
       </ul>
     </div>
@@ -78,7 +96,7 @@
     </div>
   </section>
 
-    <script src="../messageDashboard/messageDashboard.js"></script>
+    <script type="module" src="../messageDashboard/messageDashboard.js"></script>
     <script src="../dashboard.js"></script>
   </body>
 </html>

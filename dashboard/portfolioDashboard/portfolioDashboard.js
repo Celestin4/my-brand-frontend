@@ -1,9 +1,12 @@
+import Base_URL from '../../API/api.js'
+
 const openAddNewPortfolioModal = document.getElementById('openAddNewPortfolioModal')
+const portifolioList  = document.getElementById('portifolioList')
 // Getting existing portfolio
 
 async function getAllProjects() {
   try {
-    const response = await fetch(`http://localhost:3000/api/portfolios/getAllPortfolios`);
+    const response = await fetch(`${Base_URL}/portfolios/getAllPortfolios`);
     if (!response.ok) {
       throw new Error(`Failed to fetch projects: ${response.status} ${response.statusText}`);
     }
@@ -19,14 +22,13 @@ async function getAllProjects() {
 
 function displayProjects() {
   getAllProjects().then(projects => {
-    console.log(projects[0]);
     let portfolioWrapper = document.getElementById("portfolioWrapper");
     portfolioWrapper.innerHTML = "";
     projects.forEach((project, index) => {
       let projectCard = document.createElement("div");
       projectCard.classList.add("portfolio-card");
       projectCard.innerHTML = `
-            <img src="${project.image}" alt="${project.title}">
+      <img src="http://localhost:3000/uploads/${project.image}" alt="Portfolio Image">
             <h3>${project.title}</h3>
             <a href="${project.githubLink}" class="portfolio-github-link">GitHub Link</a>
             <div class="portfolio-action-buttons">
@@ -61,24 +63,19 @@ function addPortfolioFormSubmitHandler(event) {
   event.preventDefault();
   const fileInput = document.getElementById("image");
   const file = fileInput.files[0];
-  const reader = new FileReader();
 
-  reader.onload = function (event) {
     let project = {
       id: Date.now(),
-      image: "https://source.unsplash.com/random/50x50",
+      image: file,
       title: document.getElementById("title").value,
       githubLink: document.getElementById("headline").value,
     };
-    console.log(project.image);
+
+    console.log(project);
     createNewPortfolio(project);
     displayProjects();
     closeAddNewPortfolioModal();
-  };
 
-  if (file) {
-    reader.readAsDataURL(file);
-  }
 }
 
 async function createNewPortfolio(project) {
@@ -179,7 +176,7 @@ const openUpdatePortfolioModal = async (index, projectId) => {
 
 async function updateProject(projectId, updatedProject) {
   try {
-    const response = await fetch(`http://localhost:3000/api/portfolios/updatePortfolio/${projectId}`, {
+    const response = await fetch(`${Base_URL}/portfolios/updatePortfolio/${projectId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -204,7 +201,7 @@ async function deleterPoject(projectId) {
   console.log(projectToDelete);
   console.log(projectId);
   try {
-    await fetch(`http://localhost:3000/api/portfolios/deletePortfolio/${projectId}`, {
+    await fetch(`${Base_URL}/portfolios/deletePortfolio/${projectId}`, {
       method: 'DELETE',
     });
     displayProjects();
