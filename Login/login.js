@@ -51,14 +51,14 @@ async function validateForm() {
       }
     );
 
-    const loggedUser = await response.json();
+    const {token} = await response.json();
 
     if (response.ok) {
-      localStorage.setItem("loggedUser", JSON.stringify(loggedUser));
-      console.log(loggedUser);
+      localStorage.setItem("token", JSON.stringify(token));
+      console.log(token);
       window.location.href = "../index.html";
     } else {
-      const errorData = await response.user;
+      const errorData = await response.json() || "Network response was not ok";
       console.log(errorData);
     }
   } catch (error) {

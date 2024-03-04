@@ -1,5 +1,6 @@
 import Base_URL from '../../API/api.js'
 
+
 const createNewBlogmodal = document.getElementById("myModal");
 const updateBlogModel = document.getElementById("updateBlogModel");
 const btnCreateNewBlog = document.getElementById("reateNewBlogmodal");

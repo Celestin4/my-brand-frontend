@@ -127,8 +127,8 @@ async function handleFormSubmit(event) {
       return;
     }
 
-    const loggedUser = await response.json();
-    localStorage.setItem("loggedUser", JSON.stringify(loggedUser));
+    const {token} = await response.json();
+    localStorage.setItem("token", JSON.stringify(token));
     window.location.href = "../index.html";
   } catch (error) {
     displayError(

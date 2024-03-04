@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Blog Post</title>
+    <link rel="stylesheet" href="./singleBlog.css">
+</head>
+<body>
+    <div class="container">
+        <div id="blog-container"></div>
+
+        <div class="comments-section">
+            <h2>Add a Comment</h2>
+            <textarea id="comment-input" rows="4" placeholder="Your comment..."></textarea><br>
+            <button onclick="addComment()">Add Comment</button>
+
+            <h2>Comments</h2>
+            <div id="comments"></div>
+        </div>
+    </div>
+    <script src="./singleBlog.js"></script>
+</body>
+</html>

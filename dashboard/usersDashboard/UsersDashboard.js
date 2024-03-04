@@ -1,20 +1,34 @@
 import Base_URL from '../../API/api.js'
 
-fetch(`${Base_URL}/users/listOfUsers/`)
-  .then(response => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw new Error('Failed to fetch users');
-    }
-  })
-  .then(users => {
-    console.log('List of users:', users);
-    renderUserData(users);
-  })
-  .catch(error => {
-    console.error('Error fetching users:', error.message);
-  });
+const token = JSON.parse(localStorage.getItem('token'));
+try {
+  if (token) {
+    fetch(`${Base_URL}/users/listOfUsers/`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Failed to fetch users');
+      }
+    })
+    .then(users => {
+      console.log('List of users:', users);
+      renderUserData(users);
+    })
+    .catch(error => {
+      console.error('Error fetching users:', error.message);
+    });
+  } else {
+    console.error('Token not found in local storage');
+  }
+} catch (error) {
+  console.error('Error accessing local storage:', error.message);
+}
+
 
 function renderUserData(users) {
     console.log(users);
@@ -59,19 +73,22 @@ function renderUserData(users) {
 }
 
 function deleteUser(userId) {
-    fetch(`${Base_URL}/users/deleteUser/${userId}`, {
+  fetch(`${Base_URL}/users/deleteUser/${userId}`, {
       method: 'DELETE',
-    })
-    .then(response => {
-      if (response.ok) {
-        console.log(`User with ID ${userId} deleted successfully`);
-      } else {
-        throw new Error(`Failed to delete user with ID ${userId}`);
+      headers: {
+          'Authorization': `Bearer ${token}`
       }
-    })
-    .catch(error => {
+  })
+  .then(response => {
+      if (response.ok) {
+          console.log(`User with ID ${userId} deleted successfully`);
+      } else {
+          throw new Error(`Failed to delete user with ID ${userId}`);
+      }
+  })
+  .catch(error => {
       console.error('Error deleting user:', error.message);
-    });
+  });
 }
 
 function updateUser(userId) {

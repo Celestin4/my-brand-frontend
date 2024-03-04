@@ -1,4 +1,5 @@
 import Base_URL from "./API/api.js";
+import {gettingUserId, gettingToken} from './Services/userServices.js'
 document.addEventListener("DOMContentLoaded", function () {
   const mobileToggler = document.getElementById("mobile-toggle");
   const navbarLinks = document.getElementById("navbarLinks");
@@ -53,11 +54,25 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  function decodeToken(token) {
+            const payload = token.split('.')[1];
+            const decodedPayload = atob(payload);
+            return JSON.parse(decodedPayload);
+        }
+
   function updateNavbar() {
-    const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
-    if (loggedUser) {
+    const token = JSON.parse(localStorage.getItem("token"));
+    if (token) {
+      const decodedToken = decodeToken(token);
+      const {role} = decodedToken
+      console.log(role)
+
+
       document.querySelector(".siggning-links").style.display = "none";
-      document.querySelector(".dashboard-navlink").style.display = "block";
+      if(role !== 'Admin') {
+        document.querySelector(".dashboard-navlink").style.display = "block";
+        document.getElementById("dashbord-link").style.display = "none";
+      }
     } else {
       document.querySelector(".siggning-links").style.display = "block";
       document.querySelector(".dashboard-navlink").style.display = "none";
@@ -101,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   loggoutButton.addEventListener("click", function (e) {
-    localStorage.removeItem("loggedUser");
+    localStorage.removeItem("token");
     updateNavbar();
     window.location.href = "../index.html";
   });
@@ -121,7 +136,6 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Error fetching blogs:", error.message);
     }
   };
-
   const displayBlogs = async (blogs) => {
     blogs.forEach((blog) => {
       const blogElement = document.createElement("div");
@@ -135,33 +149,61 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
         <button>Read More</button>
         <div class="social-icons">
-            <span><i class="fas fa-heart like-icon"></i><span>${blog.likes.length}</span></span>
-            <span><i class="fas fa-comment comment-icon"></i><span>${blog.comments.length}</span></span>
-            <span ><i class="fas fa-share share-icon"><span>${blog.shares.length}</span></i></span>
-            <span><i class="fas fa-eye"><span>${blog.views.length}</span></i></span>
+            <span><i class="fas fa-heart like-icon" data-blogId="${blog._id}"></i><span>${blog.likes.length}</span></span>
+            <span><i class="fas fa-comment comment-icon" data-blogId="${blog._id}"></i><span>${blog.comments.length}</span></span>
+            <span><i class="fas fa-share share-icon" data-blogId="${blog._id}"><span>${blog.shares.length}</span></i></span>
+            <span><i class="fas fa-eye" data-blogId="${blog._id}"><span>${blog.views.length}</span></i></span>
         </div>
     `;
       blogContainer.appendChild(blogElement);
       const likeIcon = blogElement.querySelector(".like-icon");
       const commentIcon = blogElement.querySelector(".comment-icon");
       const shareIcon = blogElement.querySelector(".share-icon");
+      const blogId = e.target.dataset.blogid;
+      const userId = gettingUserId();
+      const token = gettingToken();
+      const requestData = {
+          userId: userId,
+          blogId: blogId
+      };
 
       likeIcon.addEventListener("click", (e) => {
-        const { user, message } = JSON.parse(
-          localStorage.getItem("loggedUser")
-        );
-        const userId = user._id;
-        const blogId = blog._id;
-        alert("Like");
-      });
+    
+    
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        };
+    
+        fetch('http://localhost:3000/api/blogs/like', {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(requestData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert(`Like button clicked for blog ID: ${blogId} and ${userId}`);
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    });
+    
       commentIcon.addEventListener("click", (e) => {
-        alert("comment");
+        const blogId = e.target.dataset.blogid;
+        alert(`Comment button clicked for blog ID: ${blogId}`);
       });
       shareIcon.addEventListener("click", (e) => {
-        alert("share");
+        const blogId = e.target.dataset.blogid;
+        alert(`Share button clicked for blog ID: ${blogId}`);
       });
     });
-  };
+};
 
   fetchAllBlogs();
 
