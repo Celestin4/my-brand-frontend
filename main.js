@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     try {
-      const response = await fetch(`${Base_URL}/messages/createMessage`, {
+      const response = await fetch(`${Base_URL}/messages`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const fetchAllBlogs = async () => {
     try {
-      const response = await fetch(`${Base_URL}/blogs/getAllPosts`);
+      const response = await fetch(`${Base_URL}/blogs`);
       if (!response.ok) {
         throw new Error("Failed to fetch blogs");
       }
@@ -159,13 +159,9 @@ document.addEventListener("DOMContentLoaded", function () {
       const likeIcon = blogElement.querySelector(".like-icon");
       const commentIcon = blogElement.querySelector(".comment-icon");
       const shareIcon = blogElement.querySelector(".share-icon");
-      const blogId = e.target.dataset.blogid;
       const userId = gettingUserId();
       const token = gettingToken();
-      const requestData = {
-          userId: userId,
-          blogId: blogId
-      };
+      
 
       likeIcon.addEventListener("click", (e) => {
     
@@ -209,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   async function getAllProjects() {
     try {
-      const response = await fetch(`${Base_URL}/portfolios/getAllPortfolios`);
+      const response = await fetch(`${Base_URL}/portfolio`);
       if (!response.ok) {
         throw new Error(
           `Failed to fetch projects: ${response.status} ${response.statusText}`

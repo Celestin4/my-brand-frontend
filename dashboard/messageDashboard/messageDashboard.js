@@ -17,15 +17,35 @@ document.addEventListener("DOMContentLoaded", async function() {
 
   async function fetchMessagesFromBackend() {
     try {
-      const response = await fetch(`${Base_URL}/messages/getAllMessages`);
+      // Get the bearer token from local storage
+      const token = localStorage.getItem('token');
+  
+      // If token is not available, redirect to login page
+      if (!token) {
+        window.location.href = '/login';
+        return; // Stop further execution
+      }
+  
+      // Fetch messages with authorization header
+      const response = await fetch(`${Base_URL}/messages`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+  
       if (!response.ok) {
         throw new Error('Failed to fetch messages');
       }
+  
       const data = await response.json();
       displayMessages(data);
     } catch (error) {
       console.error('Error fetching messages:', error);
     }
   }
-  await fetchMessagesFromBackend(); 
+  
+  // Call the function
+  await fetchMessagesFromBackend();
+   
 });
+

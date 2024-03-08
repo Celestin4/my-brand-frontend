@@ -6,7 +6,7 @@ const portifolioList  = document.getElementById('portifolioList')
 
 async function getAllProjects() {
   try {
-    const response = await fetch(`${Base_URL}/portfolios/getAllPortfolios`);
+    const response = await fetch(`${Base_URL}/portfolio`);
     if (!response.ok) {
       throw new Error(`Failed to fetch projects: ${response.status} ${response.statusText}`);
     }
@@ -80,7 +80,7 @@ function addPortfolioFormSubmitHandler(event) {
 
 async function createNewPortfolio(project) {
   try {
-    const response = await fetch(`http://localhost:3000/api/portfolios/createPortfolio`, {
+    const response = await fetch(`http://localhost:3000/api/portfolio`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -176,7 +176,7 @@ const openUpdatePortfolioModal = async (index, projectId) => {
 
 async function updateProject(projectId, updatedProject) {
   try {
-    const response = await fetch(`${Base_URL}/portfolios/updatePortfolio/${projectId}`, {
+    const response = await fetch(`${Base_URL}/portfolio/${projectId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -201,7 +201,7 @@ async function deleterPoject(projectId) {
   console.log(projectToDelete);
   console.log(projectId);
   try {
-    await fetch(`${Base_URL}/portfolios/deletePortfolio/${projectId}`, {
+    await fetch(`${Base_URL}/portfolio/${projectId}`, {
       method: 'DELETE',
     });
     displayProjects();

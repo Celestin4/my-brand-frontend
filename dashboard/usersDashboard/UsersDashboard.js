@@ -3,7 +3,7 @@ import Base_URL from '../../API/api.js'
 const token = JSON.parse(localStorage.getItem('token'));
 try {
   if (token) {
-    fetch(`${Base_URL}/users/listOfUsers/`, {
+    fetch(`${Base_URL}/users/`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -73,7 +73,7 @@ function renderUserData(users) {
 }
 
 function deleteUser(userId) {
-  fetch(`${Base_URL}/users/deleteUser/${userId}`, {
+  fetch(`${Base_URL}/users/${userId}`, {
       method: 'DELETE',
       headers: {
           'Authorization': `Bearer ${token}`

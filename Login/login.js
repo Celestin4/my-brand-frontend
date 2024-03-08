@@ -39,6 +39,8 @@ async function validateForm() {
     password: password,
   };
 
+  console.log(userData);
+
   try {
     const response = await fetch(
       `${Base_URL}/users/login`,

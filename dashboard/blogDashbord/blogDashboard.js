@@ -34,7 +34,7 @@ window.addEventListener("click", (event) => {
 // Function to fetch all blog posts from the backend
 const fetchAllBlogs = async () => {
   try {
-    const response = await fetch(`${Base_URL}/blogs/getAllPosts`);
+    const response = await fetch(`${Base_URL}/blogs`);
     if (!response.ok) {
       throw new Error("Failed to fetch blogs");
     }
