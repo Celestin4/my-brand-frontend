@@ -739,6 +739,7 @@ section {
 
 .portifolio-image img {
   max-width: 100%;
+  aspect-ratio: 1/1;
 }
 @media screen and (max-width: 768px) {
   .portifolio-list {
@@ -779,6 +780,7 @@ section {
 
 .swiper-slide.blog-swipper-slide img {
   width: 100%;
+  aspect-ratio: 3/2;
 }
 .blog-content {
   margin-top: 10px;
@@ -833,9 +835,9 @@ section {
 .contact-col {
   width: calc(50% - 10px);
   margin-bottom: 20px;
-  background-color: grey;
+  background-color: #252734;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 1px 1px #000;
   box-sizing: border-box;
 }
 
@@ -867,19 +869,24 @@ textarea {
   font-size: 16px;
 }
 
+.form-group input, .form-group textarea {
+  background-color: #fff;
+}
+.form-group input::placeholder, .form-group textarea::placeholder {
+  color: #000;
+}
 button[type="submit"] {
-  background-color: #2a2c39;
+  background-color: #252734;
   color: white;
   padding: 10px 20px;
   width: calc(100% - 22px);
-  border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
 }
 
 button[type="submit"]:hover {
-  background-color: #45a049;
+  background-color: #000;
 }
 
 @media (max-width: 768px) {
@@ -896,7 +903,6 @@ button[type="submit"]:hover {
   .contact-col {
     width: calc(100% - 10px);
     margin-bottom: 20px;
-    background-color: grey;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
@@ -945,10 +951,11 @@ button[type="submit"]:hover {
 -----------------------------------------------------------------------*/
 
 .newsletter {
-  width: 70%;
+  width: 60%;
   margin: 20px auto;
-  background-color: grey;
+  background-color: #252734;
   padding: 20px;
+  border-radius: 5px;
 }
 
 .newsletter h2 {
@@ -958,15 +965,35 @@ button[type="submit"]:hover {
   display: flex;
   justify-content: space-around;
   gap: 40px;
+  padding: 20px;
+  border-radius: 5px;
 }
 
 .input-wrapper button {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #000;
+  color: #fff;
   text-wrap: nowrap;
   padding: 10px;
+  background-color: #252734;
+  border-radius: 5px;
+}
+.input-wrapper button:hover {
+  background-color: #000;
+}
+.input-wrapper input {
+  background-color: #fff;
+  color: #000;
+  font-weight: bold;
+}
+.input-wrapper input::placeholder {
+  color: #000;
+  font-weight: lighter;
+}
+
+.input-wrapper input:focus {
+  border: none;
 }
 
 @media (max-width: 768px) {

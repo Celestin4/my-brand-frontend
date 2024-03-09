@@ -4,10 +4,13 @@
   <meta charset="UTF-8" />
   <title>Blogs Dashboard</title>
   <link rel="stylesheet" href="../dashboard.css" />
+  <link rel="stylesheet" href="./blogDashboard.css">
   <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
+  <script src="../../protectedRoutes.js" type="module"></script>
+
   <div class="sidebar">
     <div class="logo-details">
       <div class="logo_name">Celestin</div>
@@ -15,7 +18,15 @@
     </div>
     <ul class="nav-list">
       <li>
-        <a href="./BlogDashboard.html">
+        <a href="../../index.html">
+          <i class="bx bx-home"></i>
+
+          <span class="links_name">Main Home</span>
+        </a>
+        <span class="tooltip">Main Home</span>
+      </li>
+      <li>
+        <a href="../dashbord.html">
           <i class="bx bx-grid-alt"></i>
           <span class="links_name">Dashboard</span>
         </a>
@@ -30,24 +41,33 @@
       </li>
       <li>
         <a href="../portfolioDashboard/Portfolio_Dashboard.html">
-          <i class="bx bx-chat"></i>
+          <i class="bx bx-code"></i>
+
           <span class="links_name">Portfolio</span>
         </a>
         <span class="tooltip">Portfolio</span>
       </li>
       <li>
-        <a href="../blogDashbord/BlogDashboard.html">
-          <i class="bx bx-pie-chart-alt-2"></i>
+        <a href="./BlogDashboard.html">
+          <i class="bx bx-message-square-edit"></i>
+
           <span class="links_name">Blogs</span>
         </a>
         <span class="tooltip">Blogs</span>
       </li>
       <li>
         <a href="../messageDashboard/messageDashboard.html">
-          <i class="bx bx-folder"></i>
+          <i class="bx bx-chat"></i>
           <span class="links_name">Messages</span>
         </a>
         <span class="tooltip">Messages</span>
+      </li>
+      <li>
+        <a id="logout-btn">
+          <i class='bx bx-log-in-circle'></i>
+          <span class="links_name">Loggut</span>
+        </a>
+        <span class="tooltip">Logout</span>
       </li>
     </ul>
   </div>
@@ -55,7 +75,7 @@
     <div class="user-section-wrapper">
       <div class="user-list-heading">
         <span>All (56)</span>
-        <button id="myBtn">Create New Blog</button>
+        <button id="reateNewBlogmodal">Create New Blog</button>
       </div>
       <div class="user-table-wrapper">
         <div class="blog-list">
@@ -68,7 +88,7 @@
   <div id="myModal" class="modal">
     <div class="modal-content">
       <h3>Create new New Blog</h3>
-        <span class="close" onclick="closeModal()">&times;</span>
+        <span class="close">&times;</span>
         <form enctype="multipart/form-data" id="addBlogForm">
             <label for="image">Image Upload (JPG or PNG):</label>
             <input type="file" id="image" name="image" accept="image/jpeg, image/png" required>
@@ -104,14 +124,13 @@
         <label for="updateContent">Full Content:</label>
         <textarea id="updateContent" name="updateContent" rows="6" required></textarea>
   
-        <input type="hidden" id="updateBlogIndex" name="updateBlogIndex">
   
         <input type="submit" value="Submit">
       </form>
     </div>
   </div>
 
-  <script src="./blogDashboard.js"></script>
+  <script type="module" src="./blogDashboard.js"></script>
   <script src="../dashboard.js"></script>
 
 </body>

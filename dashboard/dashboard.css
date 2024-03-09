@@ -259,6 +259,12 @@
 }
 
 
+button {
+  background-color: #252734;
+  color: #fff;
+  padding: 5px 10px;
+  cursor: pointer;
+}
 
 /* Dashbord home page */
 .recent-card {
@@ -318,181 +324,11 @@ img {
   border-radius: 50%;
 }
 
-.user-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.user-th, .user-td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-.user-th {
-  background-color: #f2f2f2;
-}
-.user-avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-.user-btn {
-  padding: 5px 10px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  background-color: #4CAF50;
-  color: white;
-}
-.user-btn.update {
-  background-color: #008CBA;
-}
-.user-btn.delete {
-  background-color: #f44336;
-}
-
-.blog-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px; /* spacing between blogs */
-}
-
-.blog {
-  display: flex;
-  gap: 20px; /* spacing between image and content */
-}
-
-.blog-img {
-  max-width: 150px; 
-  aspect-ratio: 1/1;
-}
-
-.blog-content {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1; /* take remaining space */
-  gap: 10px; /* spacing between title, text, and buttons */
-}
-
-.blog-buttons {
-  display: flex;
-  gap: 10px; /* spacing between buttons */
-  align-self: flex-start; /* align buttons to the start */
-}
-
-.blog-update-btn, .blog-delete-btn {
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.blog-update-btn:hover, .blog-delete-btn:hover {
-  background-color: #0056b3;
-}
 
 
-/* Dashboard for Portfolio */
-
-.portfolio-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-}
-.portfolio-header {
-  background-color: #333;
-  color: #fff;
-  padding: 20px;
-  text-align: center;
-  width: 100%;
-}
-
-.portfolio-header h1 {
-  font-size: 24px;
-  margin: 0;
-}
-
-.portfolio-nav ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.portfolio-nav ul li {
-  display: inline;
-  margin-right: 20px;
-}
-
-.portfolio-nav ul li a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.portfolio-section {
-  padding: 20px;
-  text-align: center;
-}
-
-.portfolio-section h2 {
-  margin-bottom: 20px;
-}
-
-.portfolio-card {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-bottom: 20px;
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.portfolio-card img {
-  width: 200px;
-  height: 150px;
-  
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-.portfolio-card h3 {
-  margin-top: 0;
-  font-size: 18px;
-}
-
-.portfolio-github-link {
-  color: #333;
-  text-decoration: none;
-}
-
-.portfolio-github-link:hover {
-  text-decoration: underline;
-}
-
-.portfolio-action-buttons {
-  margin-top: 10px;
-  text-align: center;
-}
-
-.portfolio-action-buttons button {
-  margin: 0 5px;
-  padding: 8px 16px;
-  border: none;
-  background-color: #333;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.portfolio-action-buttons button:hover {
-  background-color: #555;
-}
-
-
-/* Modal Styling */
+/* ---------------------------------------------------------------------------------------------------------------
+                        Styles for Modal 
+  -----------------------------------------------------------------------------------------------------------*/
 .modal {
   display: none; 
   position: fixed; 
@@ -525,7 +361,12 @@ img {
   text-decoration: none;
   cursor: pointer;
 }
-/* Form Styling */
+
+/* ---------------------------------------------------------------------------------------------------------------
+                        Form Styling 
+  -----------------------------------------------------------------------------------------------------------*/
+
+  
 form {
   display: flex;
   flex-direction: column;

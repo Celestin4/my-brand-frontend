@@ -1,3 +1,5 @@
+import Base_URL from '../API/api.js';
+
 document
   .getElementById("togglePassword")
   .addEventListener("change", togglePasswordVisibility);
@@ -21,6 +23,13 @@ document
     validateForm();
   });
 
+  function displayError(errorMessage) {
+    let errorContainer = document.getElementById("errorContainer");
+    errorContainer.style.display = "block";
+  
+    errorContainer.textContent = errorMessage;
+  }
+
 async function validateForm() {
   const userEmail = document.getElementById("user-email").value;
   const password = document.getElementById("password").value;
@@ -30,9 +39,11 @@ async function validateForm() {
     password: password,
   };
 
+  console.log(userData);
+
   try {
     const response = await fetch(
-      "https://my-brand-backend-8mqk.onrender.com/api/users/login",
+      `${Base_URL}/users/login`,
       {
         method: "POST",
         headers: {
@@ -42,15 +53,14 @@ async function validateForm() {
       }
     );
 
-    const loggedUser = await response.json();
+    const {token} = await response.json();
 
     if (response.ok) {
-      localStorage.setItem("loggedUser", JSON.stringify(loggedUser));
-      console.log(loggedUser);
+      localStorage.setItem("token", JSON.stringify(token));
+      console.log(token);
       window.location.href = "../index.html";
     } else {
-      const errorData = await response.user;
-      // alert("Error: " + errorData);
+      const errorData = await response.json() || "Network response was not ok";
       console.log(errorData);
     }
   } catch (error) {
