@@ -132,7 +132,7 @@ async function handleFormSubmit(event) {
     window.location.href = "../index.html";
   } catch (error) {
     displayError(
-      "There is ploblem in registration. Please contact admin or try again later."
+      "There is ploblem . Please try again later."
     );
   }
 }

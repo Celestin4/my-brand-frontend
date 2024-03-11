@@ -179,6 +179,12 @@ button {
     height: 24px;
 }
 
+#errorContainer {
+    color: #FF0000;
+    display: none;
+    font-size: 12px;
+}
+
 @media (max-width: 576px) {
    .login-left {
     display: none;
@@ -193,7 +199,6 @@ button {
    .login-right  h3 {
     width: 100%;
     text-align: center;
-   
 }
 
 .login-content {
