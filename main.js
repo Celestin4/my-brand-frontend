@@ -1,5 +1,8 @@
 import Base_URL from "./API/api.js";
+import  STORAGE_URI from "./API/storageApi.js";
 import {gettingUserId, gettingToken} from './Services/userServices.js'
+
+
 document.addEventListener("DOMContentLoaded", function () {
   const mobileToggler = document.getElementById("mobile-toggle");
   const navbarLinks = document.getElementById("navbarLinks");
@@ -17,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   });
 
-  const regularSwiper = new Swiper(".swiper-container", {
+  const BlogSwiper = new Swiper(".swiper-container", {
     slidesPerView: 1,
     spaceBetween: 10,
     pagination: {
@@ -133,6 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const blogs = await response.json();
       displayBlogs(blogs);
     } catch (error) {
+      blogContainer.innerHTML = "This section is under maintenance";
       console.error("Error fetching blogs:", error.message);
     }
   };
@@ -142,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
       blogElement.className = "swiper-slide blog-swipper-slide";
 
       blogElement.innerHTML = `
-        <img src="http://localhost:3000/uploads/${blog.imageUrl}" alt="">
+        <img src="${STORAGE_URI}/${blog.imageUrl}" alt="">
         <div class="blog-content">
             <h3>${blog.title}</h3>
             <p>${blog.content}</p>
@@ -234,7 +238,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         portifolioItem.innerHTML = `
       <div class="portifolio-image">
-              <img src="http://localhost:3000/uploads/${project.image}" alt="" />
+              <img src="${STORAGE_URI}/${project.image}" alt="" />
             </div>
 
             <div class="portifolio-title">

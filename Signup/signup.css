@@ -177,6 +177,7 @@ button {
 #errorContainer {
     color: #FF0000;
     display: none;
+    font-size: 12px;
 }
 
 @media (max-width: 576px) {

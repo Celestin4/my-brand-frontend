@@ -20,7 +20,7 @@ document
   .addEventListener("submit", function (event) {
     event.preventDefault();
 
-    validateForm();
+    HandleLogin();
   });
 
   function displayError(errorMessage) {
@@ -30,7 +30,7 @@ document
     errorContainer.textContent = errorMessage;
   }
 
-async function validateForm() {
+async function HandleLogin() {
   const userEmail = document.getElementById("user-email").value;
   const password = document.getElementById("password").value;
 
@@ -53,18 +53,20 @@ async function validateForm() {
       }
     );
 
+    if (!response.ok) {
+      const errorData = await response.json();
+      const errorMessage = errorData.message || "Network response was not ok";
+      displayError(errorMessage);
+      return;
+    }
+
     const {token} = await response.json();
 
-    if (response.ok) {
       localStorage.setItem("token", JSON.stringify(token));
       console.log(token);
       window.location.href = "../index.html";
-    } else {
-      const errorData = await response.json() || "Network response was not ok";
-      console.log(errorData);
-    }
+   
   } catch (error) {
-    console.error("Error:", error);
-    alert("An error occurred. Please try again.");
+   displayError('There is a problem, Try again later')
   }
 }
