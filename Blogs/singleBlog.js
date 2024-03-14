@@ -1,68 +1,90 @@
-// Sample blog data
-const blog = {
-    title: "First Blog Post",
-    headline: "Introduction to Vanilla JavaScript",
-    fulltext: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac lorem nec odio dictum varius. Duis at nisl eu nisi maximus commodo ut vel libero. Nulla facilisi.",
-    image: "https://via.placeholder.com/800x400"
-};
+import STORAGE_URI  from "../API/storageApi.js";
+import {gettingUserName, gettingToken} from '../Services/userServices.js'
+document.addEventListener("DOMContentLoaded", function() {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const blogId = urlSearchParams.get('blogId');
+    const apiUrl = `http://localhost:3000/api/blogs/${blogId}`;
 
-let comments = [];
-
-function displayBlog() {
     const blogContainer = document.getElementById('blog-container');
-
-    const blogPost = document.createElement('div');
-    blogPost.classList.add('blog-post');
-
-    const titleElement = document.createElement('h2');
-    titleElement.textContent = blog.title;
-
-    const headlineElement = document.createElement('h3');
-    headlineElement.textContent = blog.headline;
-
-    const fulltextElement = document.createElement('p');
-    fulltextElement.textContent = blog.fulltext;
-
-    const imageElement = document.createElement('img');
-    imageElement.src = blog.image;
-    imageElement.alt = blog.title;
-
-    blogPost.appendChild(titleElement);
-    blogPost.appendChild(headlineElement);
-    blogPost.appendChild(fulltextElement);
-    blogPost.appendChild(imageElement);
-
-    blogContainer.appendChild(blogPost);
-}
-
-function addComment() {
-    const commentInput = document.getElementById('comment-input');
-    const commentText = commentInput.value.trim();
-    const userName =  'Mulo The Great';
-
-    if (userName && commentText !== '') {
-        const comment = {
-            user: userName,
-            text: commentText
-        };
-        comments.push(comment);
-        displayComments();
-        commentInput.value = '';
-    } else {
-        alert('Please provide a user name and comment.');
-    }
-}
-
-function displayComments() {
     const commentsContainer = document.getElementById('comments');
-    commentsContainer.innerHTML = '';
+    const commentInput = document.getElementById('comment-input');
 
-    comments.forEach(comment => {
-        const commentElement = document.createElement('div');
-        commentElement.classList.add('comment');
-        commentElement.innerHTML = `<strong>${comment.user}:</strong> ${comment.text}`;
-        commentsContainer.appendChild(commentElement);
-    });
-}
+    fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        displayBlog(data);
+        console.log(data);
+        console.log(data.comments);
+        displayComments(data.comments);
+      })
+      .catch(error => {
+        console.error('Error fetching blog:', error);
+      });
 
-displayBlog();
+    document.getElementById('add-comment-btn').addEventListener('click', addComment);
+
+    function displayBlog(blog) {
+        const blogPost = document.createElement('div');
+        blogPost.classList.add('blog-post');
+        blogPost.innerHTML = `
+            <h2>${blog.title}</h2>
+            <h3>${blog.headlineText}</h3>
+            <img src="${STORAGE_URI}/${blog.imageUrl}" alt="Blog Image">
+            <p>${blog.content}</p>
+        `;
+        blogContainer.appendChild(blogPost);
+    }
+
+    function displayComments(comments) {
+        comments.forEach(comment => {
+            const commentElement = document.createElement('div');
+            commentElement.classList.add('comment');
+            commentElement.innerHTML = `
+                <strong>${comment.author}</strong>: ${comment.content}
+            `;
+            commentsContainer.appendChild(commentElement);
+        });
+    }
+
+    function addComment() {
+        const commentText = commentInput.value.trim();
+        const userName = gettingUserName();
+        const token = gettingToken();
+    
+        if (commentText !== "") {
+            const comment = {
+                author: userName,
+                content: commentText
+            };
+    
+            fetch(`http://localhost:3000/api/blogs/comment/${blogId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(comment),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+               
+                commentInput.value = '';
+                alert(comment);
+            })
+            .catch(error => {
+                console.error('There was a problem with your fetch operation:', error);
+                alert('Failed to add comment. Please try again later.');
+            });
+        } else {
+            alert("Please enter a comment.");
+        }
+    }
+    
+});

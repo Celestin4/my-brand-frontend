@@ -6,27 +6,56 @@ document.addEventListener("DOMContentLoaded", async function() {
 
   function displayMessages(messages) {
     const tbody = messageTable.querySelector("tbody");
-    tbody.innerHTML = messages.map(message => `
-      <tr>
-        <td>${message.email}</td>
-        <td>${message.subject}</td>
-        <td>${message.message}</td>
-        <td>${new Date(message.createdAt).toLocaleString()}</td>
-      </tr>`).join('');
-  }
+    tbody.innerHTML = "";
+
+    messages.forEach(message => {
+        const row = createMessageRow(message);
+        tbody.appendChild(row);
+    });
+}
+function displayMessages(messages) {
+  const tbody = messageTable.querySelector("tbody");
+  tbody.innerHTML = "";
+
+  messages.forEach(message => {
+      const row = createMessageRow(message);
+      tbody.appendChild(row);
+  });
+}
+
+function createMessageRow(message) {
+  const row = document.createElement('tr');
+  row.innerHTML = `
+      <td>${message.email}</td>
+      <td>${message.subject}</td>
+      <td>${message.message}</td>
+      <td>${new Date(message.createdAt).toLocaleString()}</td>
+      `;
+      
+      // <td><button class="reply-button" data-message-id="${message._id}">Reply</button></td>
+  // const replyButton = row.querySelector('.reply-button');
+  // replyButton.addEventListener('click', () => handleReply(message._id));
+
+  return row;
+}
+
+function handleReply(messageId) {
+ 
+  console.log(`Reply to message with ID: ${messageId}`);
+}
+
+
 
   async function fetchMessagesFromBackend() {
     try {
-      // Get the bearer token from local storage
-      const token = localStorage.getItem('token');
+      
+const token = JSON.parse(localStorage.getItem('token'));
   
-      // If token is not available, redirect to login page
       if (!token) {
         window.location.href = '/login';
-        return; // Stop further execution
+        return;
       }
   
-      // Fetch messages with authorization header
       const response = await fetch(`${Base_URL}/messages`, {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -44,7 +73,6 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
   }
   
-  // Call the function
   await fetchMessagesFromBackend();
    
 });

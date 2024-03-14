@@ -83,61 +83,33 @@ document.addEventListener("click", async (event) => {
   }
 });
 
-// Function to add new blog
-const addBlog = async (formData) => {
-  try {
-    const response = await fetch(
-      `${Base_URL}/blogs/createBlogPost`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      }
-    );
-
-    console.log(formData);
-    if (!response.ok) {
-      throw new Error("Failed to add blog");
-    }
-  } catch (error) {
-    console.error("Error adding blog:", error.message);
-  }
-};
-
 document
   .getElementById("addBlogForm")
   .addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const formData = {
-      title: event.target.title.value,
-      headlineText: event.target.headline.value,
-      content: event.target.content.value,
-      image: event.target.image.files[0],
-    };
+    const formData = new FormData();
+    formData.append("title", event.target.title.value);
+    formData.append("headlineText", event.target.headline.value);
+    formData.append("content", event.target.content.value);
+    formData.append("blogImage", event.target.blogImage.files[0]);
+console.log(Array.from(formData.entries()));
+    const token = JSON.parse(localStorage.getItem("token"));
 
     const options = {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
-      body: JSON.stringify(formData),
+      body: formData,
     };
 
     try {
-      const response = await fetch(
-        `${Base_URL}/blogs/createBlogPost`,
-        options
-      );
+      const response = await fetch(`${Base_URL}/blogs`, options);
 
       if (response.ok) {
-        const blogPost = await response.json();
-        console.log("Blog post created:", blogPost);
         createNewBlogmodal.style.display = "none";
         fetchAllBlogs();
-
       } else {
         const errorData = await response.json();
         console.error("Error creating blog post:", errorData.error);
@@ -147,40 +119,50 @@ document
     }
   });
 
-// Function to update blog
-const updateBlog = async (formData, blogId) => {
-  try {
-    const response = await fetch(
-      `${Base_URL}/blogs/updateBlogPost/${blogId}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      }
-    );
-    if (!response.ok) {
-      throw new Error("Failed to update blog");
-    }
-    fetchAllBlogs();
-    updateBlogModel.style.display = "none";
-  } catch (error) {
-    console.log(formData)
-    console.log('id')
-    console.log(blogId)
-    console.error("Error updating blog:", error.message);
-    console.log(error)
-  }
-};
 
-// Function to delete blog
+  const updateBlog = async (formData, blogId) => {
+    try {
+      const token = JSON.parse(localStorage.getItem('token'));
+  
+      const response = await fetch(
+        `${Base_URL}/blogs/${blogId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token && { "Authorization": `Bearer ${token}` }),
+          },
+          body: JSON.stringify(formData),
+        }
+        );
+        console.log(formData)
+      if (!response.ok) {
+        throw new Error("Failed to update blog");
+      }
+      fetchAllBlogs();
+      updateBlogModel.style.display = "none";
+    } catch (error) {
+      console.error("Error updating blog:", error.message);
+    }
+  };
+  
 const deleteBlog = async (blogId) => {
   try {
+    const token = JSON.parse(localStorage.getItem('token'));
+
+    const confirmDelete = window.confirm("Are you sure you want to delete this blog?");
+
+    if (!confirmDelete) {
+      return;
+    }
+
     const response = await fetch(
-      `${Base_URL}/blogs/deleteBlogPost/${blogId}`,
+      `${Base_URL}/blogs/${blogId}`,
       {
         method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`, 
+        },
       }
     );
     if (!response.ok) {
@@ -194,39 +176,59 @@ const deleteBlog = async (blogId) => {
 
 
 
-  let currentBlogId;
+let currentBlogId;
 
-  const openUpdateBlogModel = async (index, blogId) => {
-     updateBlogModel.style.display = "block";
-     currentBlogId = blogId;
-     console.log(index, blogId);
-    try {
-      const response = await fetch(
-        `${Base_URL}/blogs/getSinglePost/${blogId}`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch blog details");
-      }
-      const blog = await response.json();
-      console.log(blog)
-      document.getElementById("updateTitle").value = blog.title;
-      document.getElementById("updateHeadline").value = blog.headlineText;
-      document.getElementById("updateContent").value = blog.content;
-    } catch (error) {
-      console.error("Error fetching blog details for update:", error.message);
+const openUpdateBlogModel = async (index, blogId) => {
+  updateBlogModel.style.display = "block";
+  currentBlogId = blogId;
+  console.log(index, blogId);
+  try {
+    const response = await fetch(
+      `${Base_URL}/blogs/${blogId}`
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch blog details");
     }
-  };
-  
-  
-  updateBlogForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const formData = {
-      title: event.target.updateTitle.value,
-      headlineText: event.target.updateHeadline.value,
-      content: event.target.updateContent.value,
-      imageUrl: event.target.updateImage.value,
-    };
-    updateBlog(formData, currentBlogId);
-  });
+    const blog = await response.json();
+    console.log(blog)
+    document.getElementById("updateTitle").value = blog.title;
+    document.getElementById("updateHeadline").value = blog.headlineText;
+    document.getElementById("updateContent").value = blog.content;
+  } catch (error) {
+    console.error("Error fetching blog details for update:", error.message);
+  }
+};
+
+
+updateBlogForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const token = JSON.parse(localStorage.getItem('token'));
+
+  const formData = new FormData();
+  formData.append("title", event.target.updateTitle.value);
+  formData.append("headlineText", event.target.updateHeadline.value);
+  formData.append("content", event.target.updateContent.value);
+  formData.append("updatedBlogImage", event.target.updatedBlogImage.files[0]); // Assuming this is a file input
+
+  try {
+    const response = await fetch(`${Base_URL}/blogs/${currentBlogId}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`, // Add authorization token to headers
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to update blog");
+    }
+
+    fetchAllBlogs();
+    updateBlogModel.style.display = "none";
+  } catch (error) {
+    console.error("Error updating blog:", error.message);
+  }
+});
 
 fetchAllBlogs();

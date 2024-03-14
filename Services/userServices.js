@@ -17,5 +17,13 @@ function gettingUserId() {
         return userId;
     }
 }
+function gettingUserName() {
+    const token = gettingToken();
+    if (token) {
+        const decodedToken = decodeToken(token);
+        const { fullName } = decodedToken;
+        return fullName;
+    }
+}
 
-export { gettingUserId, gettingToken };
+export { gettingUserId, gettingToken, gettingUserName };
