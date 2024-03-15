@@ -167,7 +167,7 @@ console.log(blog)
         <img src="${STORAGE_URI}/${blog.imageUrl}" alt="">
         <div class="blog-content">
             <h3>${blog.title}</h3>
-            <p>${blog.content}</p>
+            <p>${blog.headlineText}</p>
         </div>
         <button>Read More</button>
         <div class="social-icons">

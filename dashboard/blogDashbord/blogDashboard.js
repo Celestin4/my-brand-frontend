@@ -55,8 +55,8 @@ const displayBlogs = (blogs) => {
       <div class="blog">
         <img src="http://localhost:3000/uploads/${blog.imageUrl}" alt="Blog Image" class="blog-img">
         <div class="blog-content">
-          <h2>${blog.title}</h2>
-          <p>${blog.headlineText}</p>
+          <h4 class='blog-title'>${blog.title}</h4>
+          <p class='blog-headline-text'>${blog.headlineText}</p>
           <div class="blog-buttons">
             <button class="blog-update-btn" data-index="${index}" data-id="${blog._id}">Update</button>
             <button class="blog-delete-btn" data-id="${blog._id}">Delete</button>

@@ -809,10 +809,11 @@ section {
 .social-icons {
   display: flex;
   justify-content: space-around;
-  gap: 5px;
+  gap: 10px;
 }
 .social-icons a {
-  margin: 0 5px;
+  display: inline-block;
+  padding: 0 5px;
   color: #333;
   text-decoration: none;
 }

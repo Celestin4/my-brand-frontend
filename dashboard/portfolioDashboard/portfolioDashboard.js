@@ -1,5 +1,9 @@
 import Base_URL from "../../API/api.js";
 
+
+const closeUpdatePortfolioModalBtn = document.getElementById("closeUpdatePortfolioModal");
+
+closeUpdatePortfolioModalBtn.addEventListener("click", closeUpdatePortfolioModal())
 const openAddNewPortfolioModal = document.getElementById(
   "openAddNewPortfolioModal"
 );
@@ -46,12 +50,11 @@ openAddNewPortfolioModal.addEventListener("click", () => {
 
   document
     .getElementById("addBlogForm")
-    .removeEventListener("submit", addPortfolioFormSubmitHandler);
-
-  document
-    .getElementById("addBlogForm")
     .addEventListener("submit", addPortfolioFormSubmitHandler);
 });
+
+
+
 
 function addPortfolioFormSubmitHandler(event) {
   event.preventDefault();
