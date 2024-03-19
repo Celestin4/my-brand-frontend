@@ -1,5 +1,5 @@
 import Base_URL from '../../API/api.js'
-
+import STORAGE_URI from '../../API/storageApi.js';
 
 const createNewBlogmodal = document.getElementById("myModal");
 const updateBlogModel = document.getElementById("updateBlogModel");
@@ -53,7 +53,7 @@ const displayBlogs = (blogs) => {
   blogs.forEach((blog, index) => {
     const blogItem = `
       <div class="blog">
-        <img src="http://localhost:3000/uploads/${blog.imageUrl}" alt="Blog Image" class="blog-img">
+        <img src="${STORAGE_URI}/${blog.imageUrl}" alt="Blog Image" class="blog-img">
         <div class="blog-content">
           <h4 class='blog-title'>${blog.title}</h4>
           <p class='blog-headline-text'>${blog.headlineText}</p>

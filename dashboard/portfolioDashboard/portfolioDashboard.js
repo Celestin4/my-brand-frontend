@@ -1,4 +1,5 @@
 import Base_URL from "../../API/api.js";
+import STORAGE_URI from "../../API/storageApi.js";
 
 
 const closeUpdatePortfolioModalBtn = document.getElementById("closeUpdatePortfolioModal");
@@ -32,7 +33,7 @@ function displayProjects() {
       let projectCard = document.createElement("div");
       projectCard.classList.add("portfolio-card");
       projectCard.innerHTML = `
-      <img src="http://localhost:3000/uploads/${project.image}" alt="Portfolio Image">
+      <img src="${STORAGE_URI}/${project.image}" alt="Portfolio Image">
             <h3>${project.title}</h3>
             <a href="${project.githubLink}" class="portfolio-github-link">GitHub Link</a>
             <div class="portfolio-action-buttons">
@@ -74,7 +75,7 @@ function addPortfolioFormSubmitHandler(event) {
 async function createNewPortfolio(project) {
   try {
     const token = JSON.parse(localStorage.getItem("token"));
-    await fetch(`http://localhost:3000/api/portfolio`, {
+    await fetch(`${Base_URL}/portfolio`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
