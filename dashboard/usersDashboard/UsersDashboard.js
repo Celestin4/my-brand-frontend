@@ -65,6 +65,8 @@ function renderUserData(users) {
 }
 
 function deleteUser(userId) {
+  const loader = document.getElementById('loader');
+  loader.classList.remove('hidden');
   if (confirm("Are you sure you want to delete this user?")) {
     fetch(`${Base_URL}/users/${userId}`, {
       method: "DELETE",
@@ -83,6 +85,7 @@ function deleteUser(userId) {
       .catch((error) => {
         console.error("Error deleting user:", error.message);
       });
+      loader.classList.add('hidden');
   } else {
     console.log("Deletion canceled by user.");
   }
