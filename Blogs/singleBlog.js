@@ -4,7 +4,7 @@ import {gettingUserName, gettingToken} from '../Services/userServices.js'
 document.addEventListener("DOMContentLoaded", function() {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const blogId = urlSearchParams.get('blogId');
-    const apiUrl = `http://localhost:3000/api/blogs/${blogId}`;
+    const apiUrl = `${Base_URL}/blogs/${blogId}`;
 
     const blogContainer = document.getElementById('blog-container');
     const commentsContainer = document.getElementById('comments');
