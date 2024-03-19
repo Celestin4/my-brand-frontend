@@ -1,4 +1,4 @@
-window.addEventListener('load', (event) => {
+window.addEventListener('load', () => {
   let sidebar = document.querySelector(".sidebar");
   let closeBtn = document.querySelector("#btn");
   const logoutBtn = document.getElementById('logout-btn');
@@ -18,6 +18,6 @@ window.addEventListener('load', (event) => {
 
   logoutBtn.addEventListener("click", (e) => {
     localStorage.removeItem("token");
-    window.location.href = "../Login/login.html";
+    window.location.href = "/Login/login.html";
   });
 });

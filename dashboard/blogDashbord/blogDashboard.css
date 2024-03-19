@@ -12,15 +12,15 @@
     justify-content: space-between;
     gap: 20px;
     padding: 10px;
-    background-color: #2a2c3989;
+    background-color: #252734;
     padding: 20px;
     border-radius: 5px;
     margin-bottom: 20px;
   }
   
   img {
-    width: 150px; 
-    height: 150px;
+    width: 100px; 
+    height: 100px;
   }
   
   .blog-content {
@@ -37,13 +37,22 @@
   }
   
   .blog-update-btn, .blog-delete-btn {
-    padding: 5px 10px;
     background-color: #252734;
-    color: white;
-    border: none;
-    cursor: pointer;
+  color: #fff;
+  padding: 5px 10px;
+  cursor: pointer;
   }
   
   .blog-update-btn:hover, .blog-delete-btn:hover {
     background-color: #000;
+  }
+
+  .active {
+    background-color: #fff;
+   
+  }
+
+  .active i , .active .links_name {
+    color: #000 !important;
+    font-weight: bold !important;;
   }

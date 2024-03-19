@@ -7,9 +7,9 @@
     href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
     rel="stylesheet"
   />
-  
+  <link rel="stylesheet" href="../dashboard.css">
   <link rel="stylesheet" href="./portfolioDashboard.css">
-  <link rel="stylesheet" href="../dashboard.css" />
+  
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
@@ -45,7 +45,7 @@
           <span class="tooltip">User</span>
         </li>
         <li>
-          <a href="./Portfolio_Dashboard.html">
+          <a href="./Portfolio_Dashboard.html" class="active">
             <i class="bx bx-code"></i>
 
             <span class="links_name">Portfolio</span>
@@ -116,13 +116,13 @@
     <div id="updatePortfolioModal" class="modal">
       <div class="modal-content">
         <h3>Update this portfolio</h3>
-        <span class="close" onclick="closeUpdatePortfolioModal()">&times;</span>
+        <span class="close" id="closeUpdatePortfolioModal">&times;</span>
         <form id="updateBlogForm" >
           <label for="updateImage">Image Upload (JPG or PNG):</label>
           <input
             type="file"
             id="updateImage"
-            name="updateImage"
+            name="updatedImage"
             accept="image/jpeg, image/png"
           />
 
@@ -143,6 +143,6 @@
     </div>
 
     <script type="module" src="./portfolioDashboard.js"></script>
-    <script  src="../dashboard.js"></script>
+    <script type="module"  src="../dashboard.js"></script>
   </body>
 </html>

@@ -1,27 +1,31 @@
-import Base_URL from '../../API/api.js'
+import Base_URL from "../../API/api.js";
 
-const openAddNewPortfolioModal = document.getElementById('openAddNewPortfolioModal')
-const portifolioList  = document.getElementById('portifolioList')
-// Getting existing portfolio
+
+const closeUpdatePortfolioModalBtn = document.getElementById("closeUpdatePortfolioModal");
+
+closeUpdatePortfolioModalBtn.addEventListener("click", closeUpdatePortfolioModal())
+const openAddNewPortfolioModal = document.getElementById(
+  "openAddNewPortfolioModal"
+);
 
 async function getAllProjects() {
   try {
     const response = await fetch(`${Base_URL}/portfolio`);
     if (!response.ok) {
-      throw new Error(`Failed to fetch projects: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `Failed to fetch projects: ${response.status} ${response.statusText}`
+      );
     }
     const projects = await response.json();
     return projects;
   } catch (error) {
-    console.error('Error getting projects:', error);
-    return []; // or throw error if needed
+    console.error("Error getting projects:", error);
+    return [];
   }
 }
 
-// Dsiplaying all exisiting portfolio
-
 function displayProjects() {
-  getAllProjects().then(projects => {
+  getAllProjects().then((projects) => {
     let portfolioWrapper = document.getElementById("portfolioWrapper");
     portfolioWrapper.innerHTML = "";
     projects.forEach((project, index) => {
@@ -38,25 +42,18 @@ function displayProjects() {
         `;
       portfolioWrapper.appendChild(projectCard);
     });
-
-  })
+  });
 }
 
-
-
-// Create  new portfolio 
-
-openAddNewPortfolioModal.addEventListener('click', () => {
+openAddNewPortfolioModal.addEventListener("click", () => {
   document.getElementById("addNewPortfolioModal").style.display = "block";
 
   document
     .getElementById("addBlogForm")
-    .removeEventListener("submit", addPortfolioFormSubmitHandler);
-
-  document
-    .getElementById("addBlogForm")
     .addEventListener("submit", addPortfolioFormSubmitHandler);
-})
+});
+
+
 
 
 function addPortfolioFormSubmitHandler(event) {
@@ -64,80 +61,71 @@ function addPortfolioFormSubmitHandler(event) {
   const fileInput = document.getElementById("image");
   const file = fileInput.files[0];
 
-    let project = {
-      id: Date.now(),
-      image: file,
-      title: document.getElementById("title").value,
-      githubLink: document.getElementById("headline").value,
-    };
+  let project = new FormData();
+  project.append("image", file);
+  project.append("title", document.getElementById("title").value);
+  project.append("githubLink", document.getElementById("headline").value);
 
-    console.log(project);
-    createNewPortfolio(project);
-    displayProjects();
-    closeAddNewPortfolioModal();
+  createNewPortfolio(project);
 
+  closeAddNewPortfolioModal();
 }
 
 async function createNewPortfolio(project) {
   try {
-    const response = await fetch(`http://localhost:3000/api/portfolio`, {
-      method: 'POST',
+    const token = JSON.parse(localStorage.getItem("token"));
+    await fetch(`http://localhost:3000/api/portfolio`, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(project),
+      body: project,
     });
-    const data = await response.json();
-    return data;
+    displayProjects();
   } catch (error) {
-    console.error('Error saving project:', error);
+    console.error("Error saving project:", error);
   }
 }
 
-
-// Event delegation for update and delete buttons
-
 document.addEventListener("click", async (event) => {
-  if (event.target.classList.contains("edit-project-btn")) {
-    const index = event.target.dataset.index;
-    const projectId = document.querySelector('.edit-project-btn').getAttribute('data-project-id');;
-    console.log(projectId);
-    openUpdatePortfolioModal(index, projectId);
+  const projectCard = event.target.closest(".portfolio-card");
+
+  if (!projectCard) {
+    return; // Clicked outside project card, exit early
   }
-  if (event.target.classList.contains("delete-project-btn")) {
-    const projectId = document.querySelector('.delete-project-btn').getAttribute('data-project-id');;
-    console.log('id' + projectId);
-    await deleterPoject(projectId);
+
+  const editButton = projectCard.querySelector(".edit-project-btn");
+  const deleteButton = projectCard.querySelector(".delete-project-btn");
+
+  if (event.target === editButton) {
+    const projectId = editButton.dataset.projectId;
+    openUpdatePortfolioModal(projectId);
+  }
+
+  if (event.target === deleteButton) {
+    const projectId = deleteButton.dataset.projectId;
+    await deleteProject(projectId);
   }
 });
-
-
 
 function closeAddNewPortfolioModal() {
   document.getElementById("addNewPortfolioModal").style.display = "none";
 }
 
-// Update a portfolio
-
-const openUpdatePortfolioModal = async (index, projectId) => {
-  document.getElementById("updatePortfolioModal").style.display = "block";
-
+const openUpdatePortfolioModal = async (projectId) => {
   try {
-    let projects = await getAllProjects();
-  
-    // Find the project with the matching ID
-    let projectToUpdate = projects.find((project) => project._id === projectId);
-    console.log(projectToUpdate);
-
-    // Check if the project was found
+    const token = JSON.parse(localStorage.getItem("token"));
+    const projectToUpdate = await fetchPortfolio(projectId, token);
+    
     if (!projectToUpdate) {
       console.error("Project not found");
       return;
     }
 
-    // Set values in the modal
     document.getElementById("portfolioTitle").value = projectToUpdate.title;
     document.getElementById("githubLink").value = projectToUpdate.githubLink;
+
+    document.getElementById("updatePortfolioModal").style.display = "block";
 
     let updateForm = document.getElementById("updateBlogForm");
     updateForm.removeEventListener("submit", null);
@@ -146,47 +134,49 @@ const openUpdatePortfolioModal = async (index, projectId) => {
       event.preventDefault();
       const fileInput = document.getElementById("updateImage");
       const file = fileInput.files[0];
-      const reader = new FileReader();
 
-      reader.onload = async function (event) {
-        let updatedProject = {
-          id: projectId,
-          image:"https://source.unsplash.com/random/50x50",
-          title: document.getElementById("portfolioTitle").value,
-          githubLink: document.getElementById("githubLink").value,
-        };
+      let updatedProject = new FormData();
+      updatedProject.append("updatedImage", file);
+      updatedProject.append("title", document.getElementById("portfolioTitle").value);
+      updatedProject.append("githubLink", document.getElementById("githubLink").value);
 
-        // Update the project
-        await updateProject(projectId, updatedProject);
-        closeUpdatePortfolioModal();
-        displayProjects();
-      };
-
-      if (file) {
-        reader.readAsDataURL(file);
-      }
+      await updateProject(projectId, updatedProject, token);
+      closeUpdatePortfolioModal();
+      displayProjects();
     });
-
   } catch (error) {
     console.error("Error fetching projects:", error);
   }
-}
+};
 
-
-
-async function updateProject(projectId, updatedProject) {
+async function fetchPortfolio(projectId, token) {
   try {
     const response = await fetch(`${Base_URL}/portfolio/${projectId}`, {
-      method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(updatedProject),
     });
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error('Error updating project:', error);
+    console.error("Error fetching portfolio:", error);
+    return null;
+  }
+}
+
+async function updateProject(projectId, updatedProject, token) {
+  try {
+    const response = await fetch(`${Base_URL}/portfolio/${projectId}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: updatedProject,
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error updating project:", error);
   }
 }
 
@@ -194,22 +184,21 @@ function closeUpdatePortfolioModal() {
   document.getElementById("updatePortfolioModal").style.display = "none";
 }
 
+async function deleteProject(projectId) {
+  const token = JSON.parse(localStorage.getItem("token"));
 
-async function deleterPoject(projectId) {
-  let projects = await getAllProjects();
-  const projectToDelete = projects.find((project) => project._id === projectId);
-  console.log(projectToDelete);
-  console.log(projectId);
   try {
     await fetch(`${Base_URL}/portfolio/${projectId}`, {
-      method: 'DELETE',
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     displayProjects();
   } catch (error) {
-    console.error('Error deleting project:', error.JSON());
+    console.error("Error deleting project:", error);
   }
 }
-
 
 window.onload = function () {
   displayProjects();

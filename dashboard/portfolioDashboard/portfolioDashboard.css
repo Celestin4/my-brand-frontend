@@ -1,24 +1,26 @@
 .portfolio-wrapper {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 30px;
   }
   
 
   .portfolio-card {
-    background-color: #fff;
+    background-color: #252734;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 15px;
     margin-bottom: 20px;
     width: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: #fff;
   }
   
   .portfolio-card img {
-    width: 90%;
+    width: 100%;
     height: 270px;
     
     border-radius: 5px;
@@ -31,11 +33,22 @@
   }
   
   .portfolio-github-link {
-    color: #333;
+    color: #fff;
+    margin: 6px auto;
     text-decoration: none;
   }
   
   .portfolio-github-link:hover {
     text-decoration: underline;
+  }
+
+  .active {
+    background-color: #fff;
+   
+  }
+
+  .active i , .active .links_name {
+    color: #000 !important;
+    font-weight: bold !important;;
   }
   

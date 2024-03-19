@@ -1,36 +1,56 @@
 .user-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  .user-th, .user-td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  .user-th {
-    background-color: #f2f2f2;
-  }
-  .user-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-  }
-  .user-btn {
-    padding: 5px 10px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #4CAF50;
-    color: white;
-  }
-  .user-btn.update {
-    background-color: #008CBA;
-  }
-  .user-btn.delete {
-    background-color: #f44336;
-  }
-  
-tr:nth-child(even) {
-    background-color: grey;
+  width: 100%;
+  border-collapse: collapse;
 }
 
+.user-th, .user-td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.user-th {
+  background-color: #252734;
+}
+
+.user-avatar-container {
+  display: flex;
+  align-items: center; 
+}
+
+.user-avatar {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+
+.user-btn {
+  padding: 5px 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+}
+
+.user-btn.update {
+  background-color: #008CBA;
+}
+
+.user-btn.delete {
+  background-color: #f44336;
+}
+
+tr:nth-child(even) {
+  background-color: grey;
+}
+
+.active {
+  background-color: #fff;
+ 
+}
+
+.active i , .active .links_name {
+  color: #000 !important;
+  font-weight: bold !important;;
+}

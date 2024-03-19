@@ -2,6 +2,18 @@ import Base_URL from "./API/api.js";
 import  STORAGE_URI from "./API/storageApi.js";
 import {gettingUserId, gettingToken} from './Services/userServices.js'
 
+const userId = gettingUserId();
+const token = gettingToken();
+
+const requireToken = () => {
+  const token = localStorage.getItem('token');
+if (!token) {
+window.location.href = "/Login/login.html"
+}
+
+
+
+}
 
 document.addEventListener("DOMContentLoaded", function () {
   const mobileToggler = document.getElementById("mobile-toggle");
@@ -140,8 +152,14 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Error fetching blogs:", error.message);
     }
   };
+
   const displayBlogs = async (blogs) => {
     blogs.forEach((blog) => {
+      const isLiked = blog.likes.includes(userId);
+      console.log(isLiked)
+      console.log(userId)
+      console.log(blog.likes)
+console.log(blog)
       const blogElement = document.createElement("div");
       blogElement.className = "swiper-slide blog-swipper-slide";
 
@@ -149,25 +167,36 @@ document.addEventListener("DOMContentLoaded", function () {
         <img src="${STORAGE_URI}/${blog.imageUrl}" alt="">
         <div class="blog-content">
             <h3>${blog.title}</h3>
-            <p>${blog.content}</p>
+            <p>${blog.headlineText}</p>
         </div>
         <button>Read More</button>
         <div class="social-icons">
-            <span><i class="fas fa-heart like-icon" data-blogId="${blog._id}"></i><span>${blog.likes.length}</span></span>
+            <span><i class="fas fa-heart like-icon ${isLiked ? 'liked' : ''}" data-blogId="${blog._id}"></i>
+            <span>${blog.likes.length}</span></span>
             <span><i class="fas fa-comment comment-icon" data-blogId="${blog._id}"></i><span>${blog.comments.length}</span></span>
             <span><i class="fas fa-share share-icon" data-blogId="${blog._id}"><span>${blog.shares.length}</span></i></span>
             <span><i class="fas fa-eye" data-blogId="${blog._id}"><span>${blog.views.length}</span></i></span>
         </div>
     `;
       blogContainer.appendChild(blogElement);
+      
       const likeIcon = blogElement.querySelector(".like-icon");
       const commentIcon = blogElement.querySelector(".comment-icon");
       const shareIcon = blogElement.querySelector(".share-icon");
-      const userId = gettingUserId();
-      const token = gettingToken();
+     
+
+    
       
 
       likeIcon.addEventListener("click", (e) => {
+        requireToken()
+        const blogId = e.target.dataset.blogid;
+      
+        const requestData =  {
+          "userId": userId,
+          "blogId": blogId
+      }
+      
     
     
         const headers = {
@@ -187,18 +216,28 @@ document.addEventListener("DOMContentLoaded", function () {
             return response.json();
         })
         .then(data => {
-            alert(`Like button clicked for blog ID: ${blogId} and ${userId}`);
+            console.log('Liked')
         })
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
         });
     });
     
+
       commentIcon.addEventListener("click", (e) => {
+        requireToken()
         const blogId = e.target.dataset.blogid;
-        alert(`Comment button clicked for blog ID: ${blogId}`);
+        alert(blogId)
+        const params = new URLSearchParams();
+
+            params.append('blogId', blogId);
+            
+
+            window.location.href = '/Blogs/singleBlog.html?' + params.toString();
       });
+
       shareIcon.addEventListener("click", (e) => {
+        requireToken()
         const blogId = e.target.dataset.blogid;
         alert(`Share button clicked for blog ID: ${blogId}`);
       });
@@ -221,7 +260,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return projects;
     } catch (error) {
       console.error("Error getting projects:", error);
-      return []; // or throw error if needed
+      return [];
     }
   }
 
@@ -233,7 +272,7 @@ document.addEventListener("DOMContentLoaded", function () {
     getAllProjects().then((projects) => {
       portifolioList.innerHTML = "";
       projects.forEach((project, index) => {
-        const portifolioItem = document.createElement("div"); // Create a new element for each project
+        const portifolioItem = document.createElement("div");
         portifolioItem.classList.add("portifolio-content");
 
         portifolioItem.innerHTML = `
