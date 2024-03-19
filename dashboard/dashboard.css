@@ -97,6 +97,17 @@
 .sidebar.open li .tooltip {
   display: none;
 }
+
+.active {
+  background-color: #fff;
+ 
+}
+
+.active i , .active .links_name {
+  color: #000 !important;
+  font-weight: bold !important;;
+}
+
 .sidebar input {
   font-size: 15px;
   color: #fff;
@@ -139,7 +150,6 @@
   align-items: center;
   text-decoration: none;
   transition: all 0.4s ease;
-  background: #11101d;
 }
 .sidebar li a:hover {
   background: #fff;

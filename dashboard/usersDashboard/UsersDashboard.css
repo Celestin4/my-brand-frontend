@@ -44,3 +44,13 @@
 tr:nth-child(even) {
   background-color: grey;
 }
+
+.active {
+  background-color: #fff;
+ 
+}
+
+.active i , .active .links_name {
+  color: #000 !important;
+  font-weight: bold !important;;
+}

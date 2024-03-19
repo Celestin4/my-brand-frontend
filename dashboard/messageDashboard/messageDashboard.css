@@ -1,7 +1,23 @@
+.all-message {
+  color: #fff;
+  display: inline-block;
+  margin: 15px auto;
+  font-weight: bold;
+}
 tr:nth-child(odd) {
   background-color: #25273400;
 }
 
 tr:nth-child(even) {
   background-color: #00000049;
+}
+
+.active {
+  background-color: #fff;
+ 
+}
+
+.active i , .active .links_name {
+  color: #000 !important;
+  font-weight: bold !important;;
 }

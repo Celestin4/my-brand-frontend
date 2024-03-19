@@ -1,4 +1,5 @@
 import STORAGE_URI  from "../API/storageApi.js";
+import Base_URL from "../API/api.js"
 import {gettingUserName, gettingToken} from '../Services/userServices.js'
 document.addEventListener("DOMContentLoaded", function() {
     const urlSearchParams = new URLSearchParams(window.location.search);
@@ -62,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 content: commentText
             };
     
-            fetch(`http://localhost:3000/api/blogs/comment/${blogId}`, {
+            fetch(`${Base_URL}/blogs/comment/${blogId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
